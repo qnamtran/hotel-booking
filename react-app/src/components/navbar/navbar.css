@@ -1,0 +1,37 @@
+.logo{
+    font-size: 24px;
+    font-weight: bold;
+    font-family: serif;
+}
+
+.navbar{
+    height: auto;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    border-bottom: 1px solid #E0E0E0;
+    padding: 12px 24px;
+}
+
+.navContainer {
+    width: 100%;
+    max-width: 1128px;
+    color: #212121;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navButton{
+    margin-left: 16px;
+    border-radius: 24px !important;
+}
+
+/* Media queries */
+
+@media screen and (max-width: 480px){
+    .navContainer {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
