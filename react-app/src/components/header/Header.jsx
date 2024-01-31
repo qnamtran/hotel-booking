@@ -4,7 +4,7 @@ import { faCreditCard, faCartFlatbedSuitcase, faCalendarDays, faBed, faPerson, f
 import "./header.css"
 import "../../styles/styles.css"
 import { DateRange } from 'react-date-range';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import {format} from "date-fns"
@@ -24,6 +24,22 @@ const Header = () => {
         children:0,
         beds:1,
     })
+
+    const dateRangeWrapperRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dateRangeWrapperRef.current && !dateRangeWrapperRef.current.contains(event.target)) {
+                setOpenDate(false);
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [dateRangeWrapperRef]);
 
     const handleOption = (name, operation) =>{
         setOptions(prev=>{return{
@@ -68,7 +84,7 @@ const Header = () => {
                     <div className="headerSearchOptions">
                         <div className="headerSearchItem">
                             <FontAwesomeIcon icon={faCalendarDays} className='headerSearchIcon'/>
-                            <div className="headerSearchSubItem">
+                            <div className="headerSearchSubItem" ref={dateRangeWrapperRef}>
                                 <span className='headerSearchTitle'>Check-in date <span><FontAwesomeIcon icon={faArrowRightLong}/></span>Check-out Date</span>
                                 <span onClick={()=>setOpenDate(!openDate)} className='headerSearchInput'>{`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
                                 {openDate && <DateRange
