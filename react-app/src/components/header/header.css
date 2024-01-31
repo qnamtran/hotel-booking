@@ -244,5 +244,10 @@
     .input-divider{
         display: none;
     }
+
+    .date{
+        position: absolute;
+        left: 12px;
+    }
     
 }
