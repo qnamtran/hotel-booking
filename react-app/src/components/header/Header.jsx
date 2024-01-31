@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCreditCard, faCartFlatbedSuitcase, faCalendarDays, faBed, faPerson, faArrowRightLong, faPlus, faMinus, faMinusSquare, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+import { faCreditCard, faCartFlatbedSuitcase, faCalendarDays, faPerson, faArrowRightLong, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
 
 import "./header.css"
 import "../../styles/styles.css"
