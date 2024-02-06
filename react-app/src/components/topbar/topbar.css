@@ -1,0 +1,44 @@
+.topbar{
+    height: auto;
+    display: flex;
+    justify-content: center;
+    background-color: #212121;
+    padding: 8px 24px;
+}
+
+.topContainer{
+    width: 100%;
+    max-width: 1128px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hotelInfo{
+    display: flex;
+    gap: 40px;
+}
+
+.hotelInfoItem{
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hotelInfoItem span{
+    font-size: 14px;
+}
+
+.socialMedia{
+    display: flex;
+    gap: 24px;
+    font-size: 14px;
+}
+
+.socialMediaItem{
+    width: 16px;
+    height: 16px;
+    color: white;
+}

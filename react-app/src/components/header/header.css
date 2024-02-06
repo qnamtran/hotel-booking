@@ -12,7 +12,7 @@
     gap: 64px;
     width: 100%;
     max-width: 1128px;
-    margin: 40px 0;
+    margin: 32px 0;
 }
 
 .roomAvailableTag{
@@ -82,7 +82,7 @@
 }
 
 .heroImage img{
-    max-width: 88%;
+    max-width: 80%;
 }
 
 .headerSearch{
