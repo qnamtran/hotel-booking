@@ -30,3 +30,12 @@
 a{
     color: #D0C2B5;
 }
+
+/* Media queries */
+
+@media only screen and (max-width: 768px) {
+    .footerContainer {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
