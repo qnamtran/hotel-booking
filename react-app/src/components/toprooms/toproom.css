@@ -1,0 +1,78 @@
+.toproom{
+    height: auto;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    padding: 12px 24px;
+}
+
+.topRoomContainer{
+    width: 100%;
+    max-width: 1128px;
+    color: #212121;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 80px;
+    padding: 120px 0 80px 0;
+}
+
+.roomItem{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.roomImage{
+    width: 496px;
+    height: 456px;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.roomImage img{
+    width: auto;
+    height: 456px;
+}
+
+.roomDetails{
+    width: 552px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.roomHighlights{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px 0;
+}
+
+.roomHighlightsItem{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.highlightItem{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 144px;
+}
+
+.highlightIcon{
+    font-size: 20px;
+    width: 24px;
+    height: 24px;
+    color: #B09A83;
+}
+
+button span{
+    padding-left: 16px;
+}
