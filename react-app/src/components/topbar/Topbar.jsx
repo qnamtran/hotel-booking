@@ -17,7 +17,7 @@ const Topbar = () => {
                 </div>
                 <div className="hotelInfoItem">
                     <span><FontAwesomeIcon icon={faPhoneSquare}/></span>
-                    <p>+1 807 709 8998</p>
+                    <p>+1 807-709-8998</p>
                 </div>
                 <div className="hotelInfoItem">
                     <span><FontAwesomeIcon icon={faEnvelope}/></span>
