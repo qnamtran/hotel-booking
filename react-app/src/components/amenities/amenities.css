@@ -1,5 +1,5 @@
 .amenities{
-    margin-top: -32px;
+    margin-top: -34px;
     height: auto;
     display: flex;
     justify-content: center;
@@ -16,7 +16,7 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 40px;
-    padding: 120px 0 80px 0;
+    padding: 154px 0 80px 0;
 }
 
 .amenitiesTitle{
