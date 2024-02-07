@@ -22,9 +22,9 @@
     justify-content: space-between;
 }
 
-.navButton{
-    margin-left: 16px;
-    border-radius: 24px !important;
+.navItems{
+    display: flex;
+    gap: 16px;
 }
 
 /* Media queries */

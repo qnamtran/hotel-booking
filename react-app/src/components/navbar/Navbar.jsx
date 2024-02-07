@@ -7,8 +7,8 @@ const Navbar = () => {
         <div className="navContainer">
             <span className="logo">West Bestern</span>
             <div className="navItems">
-            <button className="navButton secondary-btn">Login</button>
-            <button className="navButton primary-btn">Create an account</button>
+            <button className="rounded-btn secondary-btn ">Login</button>
+            <button className="rounded-btn primary-btn">Create an account</button>
             </div>
 
         </div>
