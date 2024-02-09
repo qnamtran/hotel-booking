@@ -6,6 +6,7 @@ import Footer from '../../components/footer/Footer';
 import Topbar from '../../components/topbar/Topbar';
 import Amenities from '../../components/amenities/Amenities';
 import Toproom from '../../components/toprooms/Toproom';
+import Gallery from '../../components/gallery/Gallery';
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
         <Header/>
         <Amenities/>
         <Toproom />
+        <Gallery />
         <Footer/>
     </div>
 
