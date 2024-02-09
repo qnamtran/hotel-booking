@@ -61,6 +61,22 @@ p{
     border-radius: 24px;
 }
 
+/* padding for button icon */
+button span{
+    padding-left: 16px;
+    transition-timing-function: ease-in;
+    transition: 0.2s;
+}
+
+/* animate button icon */
+.animated-btn:hover span{
+    padding-left: 24px;
+    transition-timing-function: ease-in;
+    transition: 0.2s;
+}
+
+
+
 .rdrCalendarWrapper{
     overflow: hidden;
     color: #212121;
