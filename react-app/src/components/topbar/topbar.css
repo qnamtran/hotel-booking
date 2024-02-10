@@ -53,6 +53,13 @@
     border-radius: 16px !important;
 }
 
+.hotelInfoPopupItem span{
+    width: 16px;
+    font-size: 14px;
+    text-align: center;
+    color: #B09A83;
+}
+
 
 .socialMedia{
     display: flex;

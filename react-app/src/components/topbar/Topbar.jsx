@@ -45,15 +45,15 @@ const Topbar = () => {
                             <div className='content'>
                                 <div className="hotelInfoPopup">
                                     <h2>Contact Us</h2>
-                                    <div className="hotelInfoItem">
+                                    <div className="hotelInfoItem hotelInfoPopupItem">
                                         <span><FontAwesomeIcon icon={faLocationDot}/></span>
                                         <p>3241 Elder Lane, Thunder Bay, P7E5P5, ON</p>
                                     </div>
-                                    <div className="hotelInfoItem">
+                                    <div className="hotelInfoItem hotelInfoPopupItem">
                                         <span><FontAwesomeIcon icon={faPhoneSquare}/></span>
                                         <p>+1 807-709-8998</p>
                                     </div>
-                                    <div className="hotelInfoItem">
+                                    <div className="hotelInfoItem hotelInfoPopupItem">
                                         <span><FontAwesomeIcon icon={faEnvelope}/></span>
                                         <p>hello@westbestern.com</p>
                                     </div>
