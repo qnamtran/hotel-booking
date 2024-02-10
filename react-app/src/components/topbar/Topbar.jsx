@@ -24,6 +24,7 @@ const Topbar = () => {
                     <p>hello@westbestern.com</p>
                 </div>
             </div>
+            <a className='contact-btn'>Contact Us</a>
             <div className="socialMedia">
                 <a href='#' className="socialMediaItem"><FontAwesomeIcon icon={faFacebook} /></a>
                 <a href='#' className="socialMediaItem"><FontAwesomeIcon icon={faXTwitter} /></a>
