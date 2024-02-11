@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const roomBookingsRoute = require('./routes/roomBookings');
+const employeesRoute = require('./routes/employees');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(cors());
 
 // routes
 app.use('/api/room-bookings', roomBookingsRoute);
+app.use('/api/employees', employeesRoute);
 
 // ports
 const PORT = 8080;
