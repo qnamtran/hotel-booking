@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faLocationDot, faPhoneSquare } from '@fortawesome/free-solid-svg-icons'
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons'
@@ -9,6 +10,14 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
 const Navbar = () => {
+  // State to track password visibility
+  const [showPassword, setShowPassword] = useState(false); 
+
+  // Function to toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="navbar">
         <div className="navContainer">
@@ -37,11 +46,16 @@ const Navbar = () => {
                                     </div>
                                     <div className="inputItem">
                                       <label className='label-md'>Password</label>
-                                      <input type="password" placeholder='Enter Password' id='email' className='input-md' />
+                                      <input
+                                        type={showPassword ? "text" : "password"} // Use conditional rendering based on showPassword state
+                                        placeholder="Enter Password"
+                                        id="password"
+                                        className="input-md"
+                                      />
                                     </div>
                                     <div className="passwordOptions">
                                       <div className="checkboxItem">
-                                        <input type="checkbox" id='showPassword' className='checkBox' onclick="myFunction()" />
+                                        <input type="checkbox" id='showPassword' className='checkBox' onChange={togglePasswordVisibility} />
                                         <label htmlFor='showPassword'>Show Password</label>
                                       </div>
                                       <a href="" className='nobg-btn forgot-pw-btn'>Forgot Password?</a>
