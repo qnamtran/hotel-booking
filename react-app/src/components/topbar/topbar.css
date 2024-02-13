@@ -35,14 +35,6 @@
     color: #D0C2B5;
 }
 
-.popup-content {
-    border-radius: 8px !important;
-    width: 88% !important;
-    padding: 8px !important;
-    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.12), 0px 2px 4px 0px rgba(0, 0, 0, 0.04);
-    border: none !important;
-}
-
 .hotelInfoPopup{
     font-size: 12px;
     display: flex;
@@ -77,15 +69,6 @@
 .contact-btn{
     display:none;
     cursor: pointer;    
-}
-
-.close-btn{
-    color: #888888;
-    position: absolute;
-    top: 8x;
-    right: 8px;
-    font-size: 24px;
-    cursor: pointer;
 }
 
 /* Media queries */
