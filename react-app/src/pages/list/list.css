@@ -1,0 +1,7 @@
+.list{
+    height: auto;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    padding: 12px 24px;
+}

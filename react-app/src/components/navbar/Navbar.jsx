@@ -39,8 +39,19 @@ const Navbar = () => {
                                       <label className='label-md'>Password</label>
                                       <input type="password" placeholder='Enter Password' id='email' className='input-md' />
                                     </div>
+                                    <div className="passwordOptions">
+                                      <div className="checkboxItem">
+                                        <input type="checkbox" id='showPassword' className='checkBox' onclick="myFunction()" />
+                                        <label htmlFor='showPassword'>Show Password</label>
+                                      </div>
+                                      <a href="" className='nobg-btn forgot-pw-btn'>Forgot Password?</a>
+                                    </div>
                                   </div>
-                                  <button className='primary-btn'n>Login</button>
+                                  <button className='primary-btn'>Login</button>
+                                  <div className="register">
+                                    <p>Don't have an account?</p>
+                                    <a href="" className='nobg-btn register-btn'>Register</a>
+                                  </div>
                                 </div>
                             </div>
                         </div>

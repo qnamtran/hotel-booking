@@ -38,7 +38,7 @@
 }
 
 .loginPopup input{
-    width: 360px;
+    width: 308px;
 }
 
 .loginPopup button{
@@ -51,6 +51,28 @@
     gap: 20px;
 }
 
+.passwordOptions{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.forgot-pw-btn{
+    font-weight: normal !important;
+}
+
+.register{
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.register-btn{
+    color: #B09A83 !important;
+}
+
 
 /* Login popup */
 
@@ -60,5 +82,9 @@
     .navContainer {
         flex-direction: column;
         gap: 16px;
+    }
+
+    .loginPopup input{
+        width: 280px;
     }
 }

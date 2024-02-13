@@ -61,6 +61,12 @@ p{
     border-radius: 24px;
 }
 
+.nobg-btn{
+    font-size: 16px;
+    font-weight: bold;
+    color: #212121;
+}
+
 /* padding for button icon */
 button span{
     padding-left: 16px;
@@ -99,6 +105,21 @@ button span{
     border-color: #B09A83;
     outline: 1px solid #B09A83;
 }
+
+.checkboxItem{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.checkBox{
+    width: 20px !important;
+    height: 20px !important;
+    accent-color: #212121;
+}
+
+
+
 /* input styling */
 
 /* popup styling */
