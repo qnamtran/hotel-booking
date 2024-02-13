@@ -118,7 +118,10 @@ button span{
     accent-color: #212121;
 }
 
-
+.error-message {
+    color: #FF3D17;
+    font-size: 14px;
+}
 
 /* input styling */
 
