@@ -52,7 +52,7 @@ const Header = () => {
     };
 
     return (
-        <div id="header">
+        <div className="header">
             <div className="headerContainer">
                 <div className="headerHero">
                     <div className="heroTitle">

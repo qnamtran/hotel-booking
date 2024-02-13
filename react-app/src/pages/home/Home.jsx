@@ -19,7 +19,6 @@ const Home = () => {
         <Gallery />
         <Footer/>
     </div>
-
   )
 }
 
