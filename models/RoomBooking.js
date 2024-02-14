@@ -1,5 +1,8 @@
 /*
-models represent data structures and validation rules
+  models represent data structures and validation rules
+
+  these schemas are for reference to help with coding the backend.
+  ryan to create these with his DB work
 */
 
 const mongoose = require('mongoose');

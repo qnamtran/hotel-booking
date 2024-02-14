@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const roomBookingsRoute = require('./routes/roomBookings');
 const employeesRoute = require('./routes/employees');
+const cleaningDutiesRoute = require('./routes/cleaningDuties');
 
 const app = express();
 
@@ -17,7 +18,8 @@ app.use(bodyParser.json());
 
 
 /* 
-This is how we connect to the database. this is commented out for now, until we have one set up
+This is how we connect to the database. this is commented out 
+for now, until we have one set up
 
 mongoose.connect('', {
   useNewUrlParser: true,
@@ -31,6 +33,7 @@ app.use(cors());
 // routes
 app.use('/api/room-bookings', roomBookingsRoute);
 app.use('/api/employees', employeesRoute);
+app.use('/api/cleaning-duties', cleaningDutiesRoute);
 
 // ports
 const PORT = 8080;
