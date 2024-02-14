@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const roomBookingsRoute = require('./routes/roomBookings');
 const employeesRoute = require('./routes/employees');
 const cleaningDutiesRoute = require('./routes/cleaningDuties');
+const roomsRoute = require('./routes/rooms');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(cors());
 app.use('/api/room-bookings', roomBookingsRoute);
 app.use('/api/employees', employeesRoute);
 app.use('/api/cleaning-duties', cleaningDutiesRoute);
+app.use('/api/rooms', roomsRoute);
 
 // ports
 const PORT = 8080;
