@@ -69,12 +69,18 @@
     gap: 8px;
 }
 
-.register-btn{
-    color: #B09A83 !important;
+/* Login popup */
+
+/* Register popup */
+.consent{
+    width: 334px;
 }
 
+.consent p{
+    text-align: center;
+}
 
-/* Login popup */
+/* Register popup */
 
 /* Media queries */
 
@@ -86,5 +92,9 @@
 
     .loginPopup input{
         width: 280px;
+    }
+
+    .consent{
+        width: 306px;
     }
 }

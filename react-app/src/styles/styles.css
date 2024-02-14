@@ -67,8 +67,12 @@ p{
     color: #212121;
 }
 
+.accent-btn{
+    color: #B09A83 !important;
+}
+
 /* padding for button icon */
-button span{
+button .icon{
     padding-left: 16px;
     transition-timing-function: ease-in;
     transition: 0.2s;
@@ -94,6 +98,7 @@ button span{
 }
 
 .input-md{
+    font-family: "Figtree", sans-serif;
     padding: 8px 12px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;

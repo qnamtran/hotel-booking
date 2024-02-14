@@ -108,7 +108,7 @@ const Toproom = () => {
                 </div>
                 <div className="roomImage"><img src="https://a0.muscache.com/im/pictures/airflow/Hosting-1015487761074565473/original/e45a2b53-77eb-458c-a590-abb84781a89d.jpg?im_w=1440" alt="" /></div>
             </div>
-            <button className="secondary-btn rounded-btn animated-btn">View all of our rooms <span><FontAwesomeIcon icon={faArrowRight} /></span></button>
+            <button className="secondary-btn rounded-btn animated-btn">View all of our rooms <span className='icon'><FontAwesomeIcon icon={faArrowRight} /></span></button>
         </div>
     </div>
   )
