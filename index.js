@@ -6,6 +6,7 @@ const roomBookingsRoute = require('./routes/roomBookings');
 const employeesRoute = require('./routes/employees');
 const cleaningDutiesRoute = require('./routes/cleaningDuties');
 const roomsRoute = require('./routes/rooms');
+const path = require('path');
 
 const app = express();
 
@@ -31,7 +32,20 @@ mongoose.connect('', {
 app.use(express.json());
 app.use(cors());
 
-// routes
+// Route to serve adminPortal.html as index page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'AdminPortal', 'adminPortal.html'));
+});
+
+
+// Route to serve CRUD pages within AdminPortal folder
+app.get('/admin/:page', (req, res) => {
+  const page = req.params.page;
+  const fileName = `${page}AP.html`;
+  res.sendFile(path.join(__dirname, 'AdminPortal', fileName));
+});
+
+// API routes
 app.use('/api/room-bookings', roomBookingsRoute);
 app.use('/api/employees', employeesRoute);
 app.use('/api/cleaning-duties', cleaningDutiesRoute);

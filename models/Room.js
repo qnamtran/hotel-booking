@@ -4,18 +4,39 @@ models represent data structures and validation rules
 
 const mongoose = require('mongoose');
 
-// enum to map room type to string
+
+// Enum to map room type to string
 const RoomType = {
-    DoubleQueen: "Double queen",
-    SingleKing: "Single king",
-}
+  DoubleQueen: "Double queen",
+  SingleKing: "Single king",
+};
+
 const roomSchema = new mongoose.Schema({
-  roomType: RoomType,
-  roomNumber: Int,
-  floorNumber: Int,
-  isClean: Boolean,
-  isRollinAccessible: Boolean,
-  isHearingAccessible: Boolean,
+roomType: {
+  type: String,
+  enum: Object.values(RoomType),
+  required: true,
+},
+roomNumber: {
+  type: Number,
+  required: true,
+},
+floorNumber: {
+  type: Number,
+  required: true,
+},
+isClean: {
+  type: Boolean,
+  default: false,
+},
+isRollinAccessible: {
+  type: Boolean,
+  default: false,
+},
+isHearingAccessible: {
+  type: Boolean,
+  default: false,
+},
 });
 
 // roomSchema can be replaced with whatever the schema is actually named when created
