@@ -71,6 +71,11 @@ p{
     color: #B09A83 !important;
 }
 
+.hover-effect-btn:hover{
+    background-color: #212121;
+    color: white;
+}
+
 /* padding for button icon */
 button .icon{
     padding-left: 16px;

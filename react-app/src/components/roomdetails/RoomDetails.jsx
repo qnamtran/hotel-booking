@@ -63,7 +63,7 @@ const RoomDetails = () => {
                             <div className="roomCostPerNight">CAD 129/night</div>
                             <div className="roomCostDisclaimer">Tax and fee are excluded</div>
                         </div>
-                        <button className="primary-btn">Select this room</button>
+                        <button className="secondary-btn animated-btn hover-effect-btn">Select this room <span className='icon'><FontAwesomeIcon icon={faArrowRight} /></span></button>
                     </div>
                 </div>
             </div>
