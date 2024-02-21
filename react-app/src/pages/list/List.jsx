@@ -4,23 +4,25 @@ import "../../styles/styles.css"
 import Topbar from '../../components/topbar/Topbar'
 import Footer from '../../components/footer/Footer'
 import Navbar from '../../components/navbar/Navbar'
+import Search from '../../components/search/Search'
+import RoomDetails from '../../components/roomdetails/RoomDetails'
 
 const List = () => {
   return (
     <div>
       <Topbar/>
       <Navbar/>
-      <Footer/>
       <div className="list">
         <div className="listContainer">
-          <div className="listSearch">
-
-          </div>
+          <Search />
           <div className="listResults">
-
+            <RoomDetails />
+            <RoomDetails />
+            <RoomDetails />
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };
