@@ -67,7 +67,7 @@ const Navbar = () => {
   };
 
 
-  // Function to handle form submission
+  // Function to handle login form submission
   const handleLoginSubmit = () => {
     // Email validation
     if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
@@ -83,7 +83,7 @@ const Navbar = () => {
     }
   };
 
-  // Function to handle form submission
+  // Function to handle register form submission
   const handleRegisterSubmit = () => {
     // Full name validation
     if (!fname) {

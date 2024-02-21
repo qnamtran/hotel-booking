@@ -19,6 +19,8 @@ const Search = () => {
         }
     ]);
     const [openOptions, setOpenOptions] = useState(false);
+
+    // Set default selected options
     const [options, setOptions] = useState({
         adults: 1,
         children:0,
@@ -27,6 +29,7 @@ const Search = () => {
 
     const dateRangeWrapperRef = useRef(null);
 
+    // Close date range picker when click outside
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dateRangeWrapperRef.current && !dateRangeWrapperRef.current.contains(event.target)) {
@@ -47,6 +50,7 @@ const Search = () => {
         }})
     }
 
+    // Close options modal when click Done
     const handleCloseOptions = () => {
         setOpenOptions(false);
     };
