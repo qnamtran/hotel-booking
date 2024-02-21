@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons'
@@ -76,7 +77,7 @@ const Navbar = () => {
     if (!password) {
       setPasswordError('Please enter your password.');
       return;
-    } else if (password.length < 8){
+    } else if (password.length < 8) {
       setPasswordError('Please enter a valid password.');
       return;
     }
@@ -100,15 +101,14 @@ const Navbar = () => {
       return;
     }
     //add other password validation
-  }; 
+  };
 
 
   return (
     <div className="navbar">
       <div className="navContainer">
-        <span className="logo">West Bestern</span>
+        <Link to='/'><span  className="logo">West Bestern</span></Link>
         <div className="navItems">
-
           <Popup trigger=
             {<button className="rounded-btn secondary-btn ">Login</button>}
             modal nested>
@@ -168,7 +168,7 @@ const Navbar = () => {
               )
             }
           </Popup>
-          
+
           <Popup trigger=
             {<button className="rounded-btn primary-btn ">Create an account</button>}
             modal nested>
@@ -185,7 +185,7 @@ const Navbar = () => {
                     <div className="loginPopup">
                       <h1>Create an account</h1>
                       <div className="inputContainer">
-                      <div className="inputItem">
+                        <div className="inputItem">
                           <label className='label-md'>Full Name</label>
                           <input
                             type="text"
