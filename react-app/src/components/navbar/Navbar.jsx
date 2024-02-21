@@ -103,26 +103,41 @@ const Navbar = () => {
     //add other password validation
   };
 
+  // Function to handle close button click
+  const handleClose = () => {
+    setEmail('');
+    setFname('');
+    setPassword('');
+    setCreatePassword('');
+    setEmailError('');
+    setFnameError('');
+    setPasswordError('');
+    setCreatePasswordError('');
+  };
+
 
   return (
     <div className="navbar">
       <div className="navContainer">
-        <Link to='/'><span  className="logo">West Bestern</span></Link>
+        <Link to='/'><span className="logo">West Bestern</span></Link>
         <div className="navItems">
           <Popup trigger=
             {<button className="rounded-btn secondary-btn ">Login</button>}
-            modal nested>
+            modal nested
+            onClose={() => {
+              handleClose();
+            }}>
             {
               close => (
                 <div className='modal'>
                   <div>
                     <span className='close-btn' onClick=
-                      {() => close()}>
+                      {() => { handleClose(); close(); }}>
                       <FontAwesomeIcon icon={faCircleXmark} />
                     </span>
                   </div>
                   <div className='content'>
-                    <div className="loginPopup">
+                    <div className="formPopup">
                       <h1>Login</h1>
                       <div className="inputContainer">
                         <div className="inputItem">
@@ -171,7 +186,10 @@ const Navbar = () => {
 
           <Popup trigger=
             {<button className="rounded-btn primary-btn ">Create an account</button>}
-            modal nested>
+            modal nested
+            onClose={() => {
+              handleClose();
+            }}>
             {
               close => (
                 <div className='modal'>
@@ -182,7 +200,7 @@ const Navbar = () => {
                     </span>
                   </div>
                   <div className='content'>
-                    <div className="loginPopup">
+                    <div className="formPopup">
                       <h1>Create an account</h1>
                       <div className="inputContainer">
                         <div className="inputItem">
