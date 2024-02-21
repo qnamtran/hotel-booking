@@ -74,3 +74,10 @@
     color: #B09A83;
 }
 
+/* Media queries */
+
+@media screen and (max-width: 768px){
+    .roomImage {
+        display: none;
+    }
+}
