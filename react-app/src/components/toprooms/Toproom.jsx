@@ -12,7 +12,7 @@ const Toproom = () => {
             <h1 className='mainTitle'>Our Top Rated Rooms</h1>
             <div className="roomItem">
                 <div className="roomImage"><img src="https://a0.muscache.com/im/pictures/airflow/Hosting-1015487761074565473/original/b597e6c3-d7db-49c1-a317-fafca0d37478.jpg?im_w=1440" alt="" /></div>
-                <div className="roomDetails">
+                <div className="roomContent">
                     <h2>2 Queen Beds Room</h2>
                     <p>Enjoy the fantastic views from this double queen suite with large seating area. Utilize the ergonomic chair and catch up with work at the desk. Surf the web with WiFi. Experience ultimate comfort in the memory foam mattress. </p>
                     <div className="roomHighlights">
@@ -60,7 +60,7 @@ const Toproom = () => {
                 </div>
             </div>
             <div className="roomItem">
-                <div className="roomDetails">
+                <div className="roomContent">
                     <h2>2 Queen Beds Room</h2>
                     <p>Enjoy the fantastic views from this double queen suite with large seating area. Utilize the ergonomic chair and catch up with work at the desk. Surf the web with WiFi. Experience ultimate comfort in the memory foam mattress. </p>
                     <div className="roomHighlights">
