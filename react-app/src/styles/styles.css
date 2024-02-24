@@ -168,7 +168,25 @@ button .icon{
 
 /* popup styling */
 
+/* text content styling */
+.textContainer{
+    display: flex;
+    flex-direction: column;
+}
 
+.textTitle{
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: bold;
+    color: #888888;
+}
+
+.textData{
+    font-size: 16px;
+    line-height: 24px;
+    color: #212121;
+}
+/* text content styling */
 
 
 .rdrCalendarWrapper{
