@@ -76,3 +76,15 @@
 .logout-btn:hover{
     border: 2px solid #FF3D17;
 }
+
+/* Media queries */
+
+@media screen and (max-width: 768px){
+    .accountContainer {
+        flex-direction: column;
+    }
+
+    .myInfo {
+        order: -1;
+    }
+}
