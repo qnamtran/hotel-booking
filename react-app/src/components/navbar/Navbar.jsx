@@ -37,6 +37,12 @@ const Navbar = () => {
   // State to track create password validation error 
   const [createPasswordError, setCreatePasswordError] = useState('');
 
+  // State to track whether the login modal is open
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+  // State to track whether the register modal is open
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+
   // Function to toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -115,6 +121,25 @@ const Navbar = () => {
     setCreatePasswordError('');
   };
 
+  // Function to open login modal
+  const openLoginModal = () => {
+    setIsLoginModalOpen(true);
+  };
+
+  // Function to close login modal
+  const closeLoginModal = () => {
+    setIsLoginModalOpen(false);
+  };
+
+  // Function to open create account modal
+  const openRegisterModal = () => {
+    setIsRegisterModalOpen(true);
+  };
+
+  // Function to close create account modal
+  const closeRegisterModal = () => {
+    setIsRegisterModalOpen(false);
+  };
 
   return (
     <div className="navbar">
@@ -124,8 +149,10 @@ const Navbar = () => {
           <Popup trigger=
             {<button className="rounded-btn secondary-btn ">Login</button>}
             modal nested
+            open={isLoginModalOpen}
             onClose={() => {
               handleClose();
+              closeLoginModal();
             }}>
             {
               close => (
@@ -175,7 +202,10 @@ const Navbar = () => {
                       <button className='primary-btn' onClick={handleLoginSubmit}>Login</button>
                       <div className="register">
                         <p>Don't have an account?</p>
-                        <a href="" className='nobg-btn accent-btn'>Register</a>
+                        <a className='nobg-btn accent-btn' onClick={() => {
+                          close();
+                          openRegisterModal();
+                        }}>Register</a>
                       </div>
                     </div>
                   </div>
@@ -187,8 +217,10 @@ const Navbar = () => {
           <Popup trigger=
             {<button className="rounded-btn primary-btn ">Create an account</button>}
             modal nested
+            open={isRegisterModalOpen}
             onClose={() => {
               handleClose();
+              closeRegisterModal();
             }}>
             {
               close => (
@@ -252,7 +284,10 @@ const Navbar = () => {
                       <button className='primary-btn' onClick={handleRegisterSubmit}>Register</button>
                       <div className="register">
                         <p>Already have an account?</p>
-                        <a href="" className='nobg-btn accent-btn'>Login</a>
+                        <a className='nobg-btn accent-btn' onClick={() => {
+                          close();
+                          openLoginModal();
+                        }}>Login</a>
                       </div>
                     </div>
                   </div>
