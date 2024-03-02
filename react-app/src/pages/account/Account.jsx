@@ -1,4 +1,6 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import "./account.css"
 import "../../styles/styles.css"
 import Topbar from '../../components/topbar/Topbar'
@@ -36,8 +38,9 @@ const Account = () => {
                 <div className="textData">8077098998</div>
               </div>
               <button className="secondary-btn">Edit My Info</button>
-              <button className="nobg-btn">Change My Password</button>
+              <a className="nobg-btn">Change My Password</a>
             </div>
+            <button className="logout-btn animated-btn">Logout <span className='icon'><FontAwesomeIcon icon={faArrowRightFromBracket} /></span></button>
           </div>
         </div>
       </div>

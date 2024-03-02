@@ -79,6 +79,7 @@ p{
     font-weight: bold;
     color: #212121;
     cursor: pointer;
+    text-align: center;
 }
 
 .accent-btn{

@@ -58,3 +58,21 @@
     padding: 24px;
     border-radius: 16px;
 }
+
+.logout-btn{
+    color: #FF3D17;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid #FFB1A2;
+    padding: 10px 16px;
+    background-color: white;
+    font-family: "Figtree", sans-serif;
+    cursor: pointer;
+    margin: 0 24px;
+}
+
+.logout-btn:hover{
+    border: 2px solid #FF3D17;
+}
