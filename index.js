@@ -21,9 +21,9 @@ app.use(bodyParser.json());
 
 /* 
 This is how we connect to the database. this is commented out 
-for now, until we have one set up
+for now, until we are ready to have everything running
 
-mongoose.connect('', {
+mongoose.connect('mongodb+srv://cp440Student:p0JkvhRTMhqtbruZ@westbestern.5aniarq.mongodb.net/WestBesternDev?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
