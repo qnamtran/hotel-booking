@@ -32,6 +32,18 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get room by ID
+router.get('/:id', async (req, res) => {
+  try {
+    // Will add more specific error messages eventually
+    const rooms = await Room.findById(req.params.id);
+    res.json(rooms);
+  } catch (error) {
+
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Update a room by ID
 router.put('/:id', async (req, res) => {
   try {
