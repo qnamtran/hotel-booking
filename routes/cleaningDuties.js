@@ -3,10 +3,10 @@ Routes define the endpoint or URLs that clients use to
 interact with the server
 */
 
-const express = require('express');
-const router = express.Router();
-const CleaningDuty = require('../models/CleaningDuty');
+import express from 'express';
+import CleaningDuty from '../models/CleaningDuty.js';
 
+const router = express.Router();
 
 /*
 Request cleaning for a room (User)
@@ -98,5 +98,5 @@ router.delete('/:id', async (req, res) => {
 });
 
 
-module.exports = router;
+export default router;
 

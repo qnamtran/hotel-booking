@@ -4,7 +4,7 @@
   these schemas are for reference to help with coding the backend.
   ryan to create these with his DB work
 */
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const cleaningDutySchema = new mongoose.Schema({
   roomOrArea: {
@@ -21,5 +21,6 @@ const cleaningDutySchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+const CleaningDuty = mongoose.model('Cleaning', cleaningDutySchema);
 
-module.exports = mongoose.model('CleaningDuty', cleaningDutySchema);
+export default CleaningDuty;

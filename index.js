@@ -1,41 +1,18 @@
-// const express = require('express');
-// const cors = require('cors');
-// const mongoose = require('mongoose');
-// const bodyParser = require('body-parser');
-// const roomBookingsRoute = require('./routes/roomBookings');
-// const employeesRoute = require('./routes/employees');
-// const cleaningDutiesRoute = require('./routes/cleaningDuties');
-// const roomsRoute = require('./routes/rooms');
-// const path = require('path');
-
-
-
-
-/*
-This line may not be needed, as the body-parser middleware is
-apparently bundled with Express starting from version 4.16.0.
-Will keep it here for now just in case we need it :)
-
-app.use(bodyParser.json());
-*/
-
-
-/* 
-This is how we connect to the database. this is commented out 
-for now, until we have one set up
-
-mongoose.connect('', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
-*/
+import path from "path";
 import cors from "cors";
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import bodyParser from "body-parser";
+import cleaningDutiesRoute from './routes/cleaningDuties.js';
+import employeesRoute from './routes/employees.js';
+import roomsRoute from './routes/rooms.js';
+import roomBookingsRoute from './routes/roomBookings.js';
 
 const app = express();
 dotenv.config();
+
+app.use(bodyParser.json());
 
 const connect = async () => {
   try {
@@ -52,24 +29,24 @@ mongoose.connection.on("disconnected", () => {
 app.use(express.json());
 app.use(cors());
 
-// // Route to serve adminPortal.html as index page
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'AdminPortal', 'adminPortal.html'));
-// });
+// Route to serve adminPortal.html as index page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(path.resolve(), 'AdminPortal', 'adminPortal.html'));
+});
 
 
-// // Route to serve CRUD pages within AdminPortal folder
-// app.get('/admin/:page', (req, res) => {
-//   const page = req.params.page;
-//   const fileName = `${page}AP.html`;
-//   res.sendFile(path.join(__dirname, 'AdminPortal', fileName));
-// });
+// Route to serve CRUD pages within AdminPortal folder
+app.get('/AdminPortal/:page', (req, res) => {
+  const page = req.params.page;
+  const fileName = `${page}.html`;
+  res.sendFile(path.join(path.resolve(), 'AdminPortal', fileName));
+});
 
-// // API routes
-// app.use('/api/room-bookings', roomBookingsRoute);
-// app.use('/api/employees', employeesRoute);
-// app.use('/api/cleaning-duties', cleaningDutiesRoute);
-// app.use('/api/rooms', roomsRoute);
+// API routes
+app.use('/api/room-bookings', roomBookingsRoute);
+app.use('/api/employees', employeesRoute);
+app.use('/api/cleaning-duties', cleaningDutiesRoute);
+app.use('/api/rooms', roomsRoute);
 
 
 // /* ports

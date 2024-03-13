@@ -3,9 +3,10 @@ routes define the endpoint or URLS that clients use to
 interact with the server
 */
 
-const express = require('express');
+import express from 'express';
+import Employee from '../models/Employee.js';
+
 const router = express.Router();
-const Employee = require('../models/Employee');
 
 // ADMIN: Create a new employee
 router.post('/', async (req, res) => {
@@ -63,4 +64,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

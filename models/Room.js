@@ -2,7 +2,7 @@
 models represent data structures and validation rules
 */
 
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 
 // Enum to map room type to string
@@ -42,4 +42,4 @@ isHearingAccessible: {
 // roomSchema can be replaced with whatever the schema is actually named when created
 const Rooms = mongoose.model('Rooms', roomSchema);
 
-module.exports = Rooms;
+export default Rooms;

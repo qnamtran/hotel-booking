@@ -5,7 +5,7 @@
   ryan to create these with his DB work
 */
 
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const roomBookingSchema = new mongoose.Schema({
   roomType: String,
@@ -16,4 +16,4 @@ const roomBookingSchema = new mongoose.Schema({
 // roomBookingSchema can be replaced with whatever the schema is actually named when created
 const RoomBooking = mongoose.model('RoomBooking', roomBookingSchema);
 
-module.exports = RoomBooking;
+export default RoomBooking;
