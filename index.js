@@ -1,33 +1,53 @@
-const express = require('express');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const roomBookingsRoute = require('./routes/roomBookings');
-const employeesRoute = require('./routes/employees');
-const cleaningDutiesRoute = require('./routes/cleaningDuties');
-const roomsRoute = require('./routes/rooms');
-const path = require('path');
 
-const app = express();
+// const express = require('express');
+// const cors = require('cors');
+// const mongoose = require('mongoose');
+// const bodyParser = require('body-parser');
+// const roomBookingsRoute = require('./routes/roomBookings');
+// const employeesRoute = require('./routes/employees');
+// const cleaningDutiesRoute = require('./routes/cleaningDuties');
+// const roomsRoute = require('./routes/rooms');
+// const path = require('path');
+// const { db } = require('./models/RoomBooking');
+// const app = express();
+// const dotenv = require('dotenv').config({ path: .env});
+
+import express from "express";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+
+dotenv.config();
+
+const connect = async () => {
+  try {
+    await mongoose.connect(process.env.ATLAS_URI);
+    console.log("Connected to mongoDB");
+  } catch (error) {
+    throw error;
+  }
+};
+
+mongoose.connection.on("disconnected", () => {
+  console.log("mongoDB disconnected.");
+});
 
 /*
-This line may not be needed, as the body-parser middleware is
-apparently bundled with Express starting from version 4.16.0.
-Will keep it here for now just in case we need it :)
-
-app.use(bodyParser.json());
+const uri = process.env.ATLAS_URI;
+mongoose.connect(process.env.ATLAS_URI);
+const connection = mongoose.connection;
+connection.once('open', ()=> {
+  console.log("MongoDB database connection established succesfully");
+})
 */
 
 
-/* 
-This is how we connect to the database. this is commented out 
-for now, until we have one set up
-
+/*
 mongoose.connect('', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 */
+
 
 app.use(express.json());
 app.use(cors());
@@ -51,8 +71,14 @@ app.use('/api/employees', employeesRoute);
 app.use('/api/cleaning-duties', cleaningDutiesRoute);
 app.use('/api/rooms', roomsRoute);
 
-// ports
+/* ports
 const PORT = 8080;
+
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
+});
+*/
+app.listen(8800, () => {
+  connect();
+  console.log("Connected to backend.");
 });
