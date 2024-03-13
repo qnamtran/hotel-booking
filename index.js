@@ -9,7 +9,7 @@
 // const path = require('path');
 
 
-// const app = express();
+
 
 /*
 This line may not be needed, as the body-parser middleware is
@@ -29,16 +29,17 @@ mongoose.connect('', {
   useUnifiedTopology: true
 });
 */
-
+import cors from "cors";
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
+const app = express();
 dotenv.config();
 
 const connect = async () => {
   try {
-    await mongoose.connect(process.env.MONGO);
+    await mongoose.connect(process.env.ATLAS_URI);
     console.log("Connected to mongoDB");
   } catch (error) {
     throw error;
@@ -64,11 +65,11 @@ app.use(cors());
 //   res.sendFile(path.join(__dirname, 'AdminPortal', fileName));
 // });
 
-// API routes
-app.use('/api/room-bookings', roomBookingsRoute);
-app.use('/api/employees', employeesRoute);
-app.use('/api/cleaning-duties', cleaningDutiesRoute);
-app.use('/api/rooms', roomsRoute);
+// // API routes
+// app.use('/api/room-bookings', roomBookingsRoute);
+// app.use('/api/employees', employeesRoute);
+// app.use('/api/cleaning-duties', cleaningDutiesRoute);
+// app.use('/api/rooms', roomsRoute);
 
 
 // /* ports
