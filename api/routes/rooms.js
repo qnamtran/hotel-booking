@@ -4,19 +4,19 @@ import { verifyAdmin } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
-// create room
+// Create room
 router.post("/", verifyAdmin, createRoom);
 
-// update room
+// Update room
 router.put("/:id", verifyAdmin, updateRoom);
 
-// delete room
+// Delete room
 router.delete("/:id", verifyAdmin, deleteRoom);
 
-// get particular room
+// Get particular room
 router.get("/:id", getRoom);
 
-// get all room
+// Get all room
 router.get("/", getRooms);
 
 export default router;
