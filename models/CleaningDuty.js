@@ -14,12 +14,16 @@ const cleaningDutySchema = new mongoose.Schema({
   assignedEmployee: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Employee', // referencing Employee model
-    required: true,
+    required: false,
+    // employee will be assigned later (post creation)
   },
   date: {
     type: Date,
     default: Date.now,
   },
+  requestedBy: {
+    type: String
+  }
 });
 const CleaningDuty = mongoose.model('Cleaning', cleaningDutySchema);
 
