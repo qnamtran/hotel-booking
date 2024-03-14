@@ -108,3 +108,19 @@
     border: 1px solid #F1F1F1;
 }
 
+/* Media queries */
+
+@media screen and (max-width: 768px){
+    .roomDetailsContainer{
+        flex-direction: column;
+    }
+
+    .roomDetailsContent{
+        width: auto;
+    }
+
+    .roomImage{
+        width: 100%;
+        height: 100%;
+    }
+}
