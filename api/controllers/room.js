@@ -59,20 +59,20 @@ export const getRooms = async (req, res, next) => {
 
 export const countByRoomNumber = async (req, res, next) => {
   try {
-    const result = await Room.aggregate([
-      {
-        $project: {
-          numberOfRoomNumbers: { $size: "$roomNumbers" }
-        }
-      }
-    ]);
+    const roomId = req.params.id; // Assuming the room ID is passed as a route parameter
 
-    if (!result) {
-      throw new Error("No rooms found");
+    // Find the room by ID
+    const room = await Room.findById(roomId);
+
+    if (!room) {
+      throw new Error("Room not found");
     }
 
-    res.status(200).json({ count: result[0].numberOfRoomNumbers });
+    const numberOfRoomNumbers = room.roomNumbers.length;
+
+    res.status(200).json({ count: numberOfRoomNumbers });
   } catch (err) {
     next(err);
   }
 };
+

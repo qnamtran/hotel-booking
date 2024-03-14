@@ -17,8 +17,6 @@ const List = () => {
           <Search />
           <div className="listResults">
             <RoomDetails />
-            <RoomDetails />
-            <RoomDetails />
           </div>
         </div>
       </div>
