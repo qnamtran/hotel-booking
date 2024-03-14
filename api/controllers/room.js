@@ -55,3 +55,24 @@ export const getRooms = async (req, res, next) => {
     next(err);
   }
 };
+
+
+export const countByRoomNumber = async (req, res, next) => {
+  try {
+    const result = await Room.aggregate([
+      {
+        $project: {
+          numberOfRoomNumbers: { $size: "$roomNumbers" }
+        }
+      }
+    ]);
+
+    if (!result) {
+      throw new Error("No rooms found");
+    }
+
+    res.status(200).json({ count: result[0].numberOfRoomNumbers });
+  } catch (err) {
+    next(err);
+  }
+};
