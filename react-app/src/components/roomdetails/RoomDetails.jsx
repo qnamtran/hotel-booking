@@ -66,7 +66,7 @@ const RoomDetails = () => {
                                         </div>
                                         <div className="highlightItem">
                                             <span className="highlightIcon"><FontAwesomeIcon icon={faBed} /></span>
-                                            <p>Queen bed</p>
+                                            <p><span>{item.numberOfBed}</span> bed(s)</p>
                                         </div>
                                         <div className="highlightItem">
                                             <span className="highlightIcon"><FontAwesomeIcon icon={faPeopleGroup} /></span>
