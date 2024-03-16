@@ -1,5 +1,5 @@
 import React from 'react'
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./list.css"
 import "../../styles/styles.css"
 import Topbar from '../../components/topbar/Topbar'
@@ -17,12 +17,21 @@ const List = () => {
 
   const { options } = useContext(SearchContext);
 
-  // Filter rooms based on search criteria
-  const filteredData = data.filter(room => {
-    const { adults, children, beds } = options;
-    const totalGuests = adults + children;
-    return room.maxPeople >= totalGuests && room.numberOfBed >= beds;
-  });
+  const [filteredData, setFilteredData] = useState([]);
+
+  useEffect(() => {
+    // Filter rooms based on search criteria
+    const filteredRooms = data.filter(room => {
+      const { adults, children, beds } = options;
+      const totalGuests = adults + children;
+      return room.maxPeople >= totalGuests && room.numberOfBed >= beds;
+    });
+    setFilteredData(filteredRooms);
+
+    // Save filtered data to localStorage
+    localStorage.setItem('filteredData', JSON.stringify(filteredRooms));
+  }, [data, options]);
+
 
   // Calculate available room count for each room
   const calculateAvailableRoomCount = (room) => {
