@@ -55,24 +55,3 @@ export const getRooms = async (req, res, next) => {
     next(err);
   }
 };
-
-
-export const countByRoomNumber = async (req, res, next) => {
-  try {
-    const roomId = req.params.id; // Assuming the room ID is passed as a route parameter
-
-    // Find the room by ID
-    const room = await Room.findById(roomId);
-
-    if (!room) {
-      throw new Error("Room not found");
-    }
-
-    const numberOfRoomNumbers = room.roomNumbers.length;
-
-    res.status(200).json({ count: numberOfRoomNumbers });
-  } catch (err) {
-    next(err);
-  }
-};
-
