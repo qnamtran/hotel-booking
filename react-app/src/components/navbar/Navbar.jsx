@@ -13,10 +13,10 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
 const Navbar = () => {
-  const { loading, error, dispatch } = useContext(AuthContext);
+  const {user, loading, error, dispatch } = useContext(AuthContext);
   const navigate = useNavigate()
 
-  
+
   // State to track password visibility
   const [showPassword, setShowPassword] = useState(false);
 
@@ -162,159 +162,164 @@ const Navbar = () => {
     <div className="navbar">
       <div className="navContainer">
         <Link to='/'><span className="logo">West Bestern</span></Link>
-        <div className="navItems">
-          <Popup trigger=
-            {<button className="rounded-btn secondary-btn ">Login</button>}
-            modal nested
-            open={isLoginModalOpen}
-            onClose={() => {
-              handleClose();
-              closeLoginModal();
-            }}>
-            {
-              close => (
-                <div className='modal'>
-                  <div>
-                    <span className='close-btn' onClick=
-                      {() => { handleClose(); close(); }}>
-                      <FontAwesomeIcon icon={faCircleXmark} />
-                    </span>
-                  </div>
-                  <div className='content'>
-                    <div className="formPopup">
-                      <h1>Login</h1>
-                      <div className="inputContainer">
-                        <div className="inputItem">
-                          <label className='label-md'>Email Address</label>
-                          <input
-                            type="email"
-                            placeholder="Enter Email Address"
-                            id="email"
-                            className="input-md"
-                            value={email}
-                            onChange={handleEmailChange}
-                          />
-                          {emailError && <p className="error-message">{emailError}</p>}
-                        </div>
-                        <div className="inputItem">
-                          <label className='label-md'>Password</label>
-                          <input
-                            type={showPassword ? "text" : "password"} // Use conditional rendering based on showPassword state
-                            placeholder="Enter Password"
-                            id="password"
-                            className="input-md"
-                            value={password}
-                            onChange={handlePasswordChange}
-                          />
-                          {passwordError && <p className="error-message">{passwordError}</p>}
-                        </div>
-                        <div className="passwordOptions">
-                          <div className="checkboxItem">
-                            <input type="checkbox" id='showPassword' className='checkBox' onChange={togglePasswordVisibility} />
-                            <label htmlFor='showPassword'>Show Password</label>
-                          </div>
-                          <a href="" className='nobg-btn forgot-pw-btn'>Forgot Password?</a>
-                        </div>
-                      </div>
-                      <button disabled={loading} className='primary-btn' onClick={handleLoginSubmit}>Login</button>
-                      {error && <span>{error.message}</span>}
-                      <div className="register">
-                        <p>Don't have an account?</p>
-                        <a className='nobg-btn accent-btn' onClick={() => {
-                          close();
-                          openRegisterModal();
-                        }}>Register</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )
-            }
-          </Popup>
-
-          <Popup trigger=
-            {<button className="rounded-btn primary-btn ">Create an account</button>}
-            modal nested
-            open={isRegisterModalOpen}
-            onClose={() => {
-              handleClose();
-              closeRegisterModal();
-            }}>
-            {
-              close => (
-                <div className='modal'>
-                  <div>
-                    <span className='close-btn' onClick=
-                      {() => close()}>
-                      <FontAwesomeIcon icon={faCircleXmark} />
-                    </span>
-                  </div>
-                  <div className='content'>
-                    <div className="formPopup">
-                      <h1>Create an account</h1>
-                      <div className="inputContainer">
-                        <div className="inputItem">
-                          <label className='label-md'>Full Name</label>
-                          <input
-                            type="text"
-                            placeholder="Enter Your Full Name"
-                            id="fname"
-                            className="input-md"
-                            value={fname}
-                            onChange={handleFnameChange}
-                          />
-                          {fnameError && <p className="error-message">{fnameError}</p>}
-                        </div>
-                        <div className="inputItem">
-                          <label className='label-md'>Email Address</label>
-                          <input
-                            type="email"
-                            placeholder="Enter Your Email Address"
-                            id="email"
-                            className="input-md"
-                            value={email}
-                            onChange={handleEmailChange}
-                          />
-                          {emailError && <p className="error-message">{emailError}</p>}
-                        </div>
-                        <div className="inputItem">
-                          <label className='label-md'>Create a Secure Password</label>
-                          <input
-                            type={showPassword ? "text" : "password"} // Use conditional rendering based on showPassword state
-                            placeholder="Minimum 8 characters"
-                            id="password"
-                            className="input-md"
-                            value={createPassword}
-                            onChange={handleCreatePasswordChange}
-                          />
-                          {createPasswordError && <p className="error-message">{createPasswordError}</p>}
-                        </div>
-                        <div className="passwordOptions">
-                          <div className="checkboxItem">
-                            <input type="checkbox" id='showPassword' className='checkBox' onChange={togglePasswordVisibility} />
-                            <label htmlFor='showPassword'>Show Password</label>
-                          </div>
-                        </div>
-                        <div className="consent">
-                          <p>By signing up, you agree with West Bestern <a href="#" className='nobg-btn accent-btn'>Terms of Use</a> and <a href="#" className='nobg-btn accent-btn'>Privacy Policy</a></p>
-                        </div>
-                      </div>
-                      <button className='primary-btn' onClick={handleRegisterSubmit}>Register</button>
-                      <div className="register">
-                        <p>Already have an account?</p>
-                        <a className='nobg-btn accent-btn' onClick={() => {
-                          close();
-                          openLoginModal();
-                        }}>Login</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )
-            }
-          </Popup>
+        {user ? (
+        <div>
+          <span>Welcome back, <Link to="/account" className="secondary-btn rounded-btn">{user.name}</Link></span>
         </div>
+      )  : (
+          <div className="navItems">
+            <Popup trigger=
+              {<button className="rounded-btn secondary-btn ">Login</button>}
+              modal nested
+              open={isLoginModalOpen}
+              onClose={() => {
+                handleClose();
+                closeLoginModal();
+              }}>
+              {
+                close => (
+                  <div className='modal'>
+                    <div>
+                      <span className='close-btn' onClick=
+                        {() => { handleClose(); close(); }}>
+                        <FontAwesomeIcon icon={faCircleXmark} />
+                      </span>
+                    </div>
+                    <div className='content'>
+                      <div className="formPopup">
+                        <h1>Login</h1>
+                        <div className="inputContainer">
+                          <div className="inputItem">
+                            <label className='label-md'>Email Address</label>
+                            <input
+                              type="email"
+                              placeholder="Enter Email Address"
+                              id="email"
+                              className="input-md"
+                              value={email}
+                              onChange={handleEmailChange}
+                            />
+                            {emailError && <p className="error-message">{emailError}</p>}
+                          </div>
+                          <div className="inputItem">
+                            <label className='label-md'>Password</label>
+                            <input
+                              type={showPassword ? "text" : "password"} // Use conditional rendering based on showPassword state
+                              placeholder="Enter Password"
+                              id="password"
+                              className="input-md"
+                              value={password}
+                              onChange={handlePasswordChange}
+                            />
+                            {passwordError && <p className="error-message">{passwordError}</p>}
+                          </div>
+                          <div className="passwordOptions">
+                            <div className="checkboxItem">
+                              <input type="checkbox" id='showPassword' className='checkBox' onChange={togglePasswordVisibility} />
+                              <label htmlFor='showPassword'>Show Password</label>
+                            </div>
+                            <a href="" className='nobg-btn forgot-pw-btn'>Forgot Password?</a>
+                          </div>
+                        </div>
+                        <button disabled={loading} className='primary-btn' onClick={handleLoginSubmit}>Login</button>
+                        {error && <span>{error.message}</span>}
+                        <div className="register">
+                          <p>Don't have an account?</p>
+                          <a className='nobg-btn accent-btn' onClick={() => {
+                            close();
+                            openRegisterModal();
+                          }}>Register</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+            </Popup>
 
+            <Popup trigger=
+              {<button className="rounded-btn primary-btn ">Create an account</button>}
+              modal nested
+              open={isRegisterModalOpen}
+              onClose={() => {
+                handleClose();
+                closeRegisterModal();
+              }}>
+              {
+                close => (
+                  <div className='modal'>
+                    <div>
+                      <span className='close-btn' onClick=
+                        {() => close()}>
+                        <FontAwesomeIcon icon={faCircleXmark} />
+                      </span>
+                    </div>
+                    <div className='content'>
+                      <div className="formPopup">
+                        <h1>Create an account</h1>
+                        <div className="inputContainer">
+                          <div className="inputItem">
+                            <label className='label-md'>Full Name</label>
+                            <input
+                              type="text"
+                              placeholder="Enter Your Full Name"
+                              id="fname"
+                              className="input-md"
+                              value={fname}
+                              onChange={handleFnameChange}
+                            />
+                            {fnameError && <p className="error-message">{fnameError}</p>}
+                          </div>
+                          <div className="inputItem">
+                            <label className='label-md'>Email Address</label>
+                            <input
+                              type="email"
+                              placeholder="Enter Your Email Address"
+                              id="email"
+                              className="input-md"
+                              value={email}
+                              onChange={handleEmailChange}
+                            />
+                            {emailError && <p className="error-message">{emailError}</p>}
+                          </div>
+                          <div className="inputItem">
+                            <label className='label-md'>Create a Secure Password</label>
+                            <input
+                              type={showPassword ? "text" : "password"} // Use conditional rendering based on showPassword state
+                              placeholder="Minimum 8 characters"
+                              id="password"
+                              className="input-md"
+                              value={createPassword}
+                              onChange={handleCreatePasswordChange}
+                            />
+                            {createPasswordError && <p className="error-message">{createPasswordError}</p>}
+                          </div>
+                          <div className="passwordOptions">
+                            <div className="checkboxItem">
+                              <input type="checkbox" id='showPassword' className='checkBox' onChange={togglePasswordVisibility} />
+                              <label htmlFor='showPassword'>Show Password</label>
+                            </div>
+                          </div>
+                          <div className="consent">
+                            <p>By signing up, you agree with West Bestern <a href="#" className='nobg-btn accent-btn'>Terms of Use</a> and <a href="#" className='nobg-btn accent-btn'>Privacy Policy</a></p>
+                          </div>
+                        </div>
+                        <button className='primary-btn' onClick={handleRegisterSubmit}>Register</button>
+                        <div className="register">
+                          <p>Already have an account?</p>
+                          <a className='nobg-btn accent-btn' onClick={() => {
+                            close();
+                            openLoginModal();
+                          }}>Login</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+            </Popup>
+          </div>
+        )}
       </div>
     </div>
   )
