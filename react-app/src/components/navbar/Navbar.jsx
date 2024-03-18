@@ -1,7 +1,10 @@
+import axios from "axios";
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons'
+import { AuthContext } from "../../context/AuthContext";
 
 import "./navbar.css"
 import "../../styles/styles.css"
@@ -10,6 +13,10 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
 const Navbar = () => {
+  const { loading, error, dispatch } = useContext(AuthContext);
+  const navigate = useNavigate()
+
+  
   // State to track password visibility
   const [showPassword, setShowPassword] = useState(false);
 
@@ -74,18 +81,28 @@ const Navbar = () => {
 
 
   // Function to handle login form submission
-  const handleLoginSubmit = () => {
-    // Email validation
-    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-      setEmailError('Please enter a valid email address.');
-      return;
-    }
-    if (!password) {
-      setPasswordError('Please enter your password.');
-      return;
-    } else if (password.length < 8) {
-      setPasswordError('Please enter a valid password.');
-      return;
+  const handleLoginSubmit = async () => {
+    try {
+      // Email validation
+      if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+        setEmailError('Please enter a valid email address.');
+        return;
+      }
+      if (!password) {
+        setPasswordError('Please enter your password.');
+        return;
+      } else if (password.length < 8) {
+        setPasswordError('Please enter a valid password.');
+        return;
+      }
+      const res = await axios.post('/auth/login', { email, password });
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
+      navigate("/")
+      // Assuming the response contains user data or token, handle it accordingly
+      console.log(res.data); // You may want to store the token in local storage or cookie
+    } catch (err) {
+      // Handle login error
+      dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
     }
   };
 
@@ -199,7 +216,8 @@ const Navbar = () => {
                           <a href="" className='nobg-btn forgot-pw-btn'>Forgot Password?</a>
                         </div>
                       </div>
-                      <button className='primary-btn' onClick={handleLoginSubmit}>Login</button>
+                      <button disabled={loading} className='primary-btn' onClick={handleLoginSubmit}>Login</button>
+                      {error && <span>{error.message}</span>}
                       <div className="register">
                         <p>Don't have an account?</p>
                         <a className='nobg-btn accent-btn' onClick={() => {
