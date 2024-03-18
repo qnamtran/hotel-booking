@@ -229,26 +229,6 @@ button .icon{
     box-shadow: none !important;
 }
 
-/* .rdrDateDisplayItemActive{
-    border-color: #B09A83 !important;
+.user-account{
+    display: flex;
 }
-
-.rdrSelected, .rdrInRange, .rdrStartEdge, .rdrEndEdge{
-    background: #B09A83 !important;
-}
-
-.rdrDayStartPreview, .rdrDayInPreview, .rdrDayEndPreview{
-    border: 0px solid #212121 !important;
-}
-
-.rdrDefinedRangesWrapper{
-    .rdrStaticRangeSelected{
-      color: #212121 !important;
-    }
-}
-
-.rdrCalendarWrapper:not(.rdrDateRangeWrapper) .rdrDayHovered .rdrDayNumber:after{
-    content: '';
-    border: 1px solid #212121 !important;
-} */
-

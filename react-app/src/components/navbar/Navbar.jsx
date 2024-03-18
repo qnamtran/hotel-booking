@@ -4,6 +4,8 @@ import { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+
 import { AuthContext } from "../../context/AuthContext";
 
 import "./navbar.css"
@@ -163,8 +165,8 @@ const Navbar = () => {
       <div className="navContainer">
         <Link to='/'><span className="logo">West Bestern</span></Link>
         {user ? (
-        <div>
-          <span>Welcome back, <Link to="/account" className="secondary-btn rounded-btn">{user.name}</Link></span>
+        <div className="user-account">
+          <Link to="/account"><button className="secondary-btn rounded-btn">{user.name} <span className="icon"><FontAwesomeIcon icon={faUser} /></span></button></Link>
         </div>
       )  : (
           <div className="navItems">
