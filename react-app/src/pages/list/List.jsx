@@ -53,11 +53,11 @@ const List = () => {
               "loading"
             ) : (
               <>
-                {filteredData.map((item) => (
+                {filteredData.map((roomDetailData) => (
                   <RoomDetails
-                    item={item}
-                    key={item._id}
-                    availableRoomCount={calculateAvailableRoomCount(item)}
+                    roomDetailData={roomDetailData}
+                    key={roomDetailData._id}
+                    availableRoomCount={calculateAvailableRoomCount(roomDetailData)}
                   />
                 ))}
               </>

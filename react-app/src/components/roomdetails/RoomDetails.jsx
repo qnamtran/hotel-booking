@@ -4,7 +4,7 @@ import "./roomDetails.css"
 import "../../styles/styles.css"
 import { faArrowRight, faBathtub, faBed, faCouch, faPeopleGroup, faSink, faSmokingBan, faSnowflake, faTv } from '@fortawesome/free-solid-svg-icons'
 
-const RoomDetails = ({ item, availableRoomCount }) => {
+const RoomDetails = ({ roomDetailData, availableRoomCount }) => {
 
     return (
         <div className="roomDetails">
@@ -13,15 +13,15 @@ const RoomDetails = ({ item, availableRoomCount }) => {
                 <div className="roomDetailsContent">
                     <div className="roomAvailableCount"><span>{availableRoomCount}</span> available room(s)</div>
                     <div className="roomInformation">
-                        <h2 className='roomTitle'>{item.name}</h2>
-                        <p className='roomDescription'>{item.description} </p>
+                        <h2 className='roomTitle'>{roomDetailData.name}</h2>
+                        <p className='roomDescription'>{roomDetailData.description} </p>
                     </div>
                     <div className="roomHighlights">
                         <h3>Room Highlights</h3>
                         <div className="roomHighlightsItem">
                             <div className="highlightItem">
                                 <span className="highlightIcon"><FontAwesomeIcon icon={faPeopleGroup} /></span>
-                                <p>Sleeps <span>{item.maxPeople}</span></p>
+                                <p>Sleeps <span>{roomDetailData.maxPeople}</span></p>
                             </div>
                             <div className="highlightItem">
                                 <span className="highlightIcon"><FontAwesomeIcon icon={faSnowflake} /></span>
@@ -33,7 +33,7 @@ const RoomDetails = ({ item, availableRoomCount }) => {
                             </div>
                             <div className="highlightItem">
                                 <span className="highlightIcon"><FontAwesomeIcon icon={faBed} /></span>
-                                <p><span>{item.numberOfBed}</span> bed(s)</p>
+                                <p><span>{roomDetailData.numberOfBed}</span> bed(s)</p>
                             </div>
                             <div className="highlightItem">
                                 <span className="highlightIcon"><FontAwesomeIcon icon={faPeopleGroup} /></span>
@@ -59,7 +59,7 @@ const RoomDetails = ({ item, availableRoomCount }) => {
                     </div>
                     <div className="roomCallToAction">
                         <div className="roomCost">
-                            <div className="roomCostPerNight">CAD {item.costPerNight}/night</div>
+                            <div className="roomCostPerNight">CAD {roomDetailData.costPerNight}/night</div>
                             <div className="roomCostDisclaimer">Tax and fee are excluded</div>
                         </div>
                         <button className="secondary-btn animated-btn hover-effect-btn">Select this room <span className='icon'><FontAwesomeIcon icon={faArrowRight} /></span></button>
