@@ -9,6 +9,8 @@ import Footer from '../../components/footer/Footer'
 import Booking from '../../components/booking/Booking'
 
 const Account = () => {
+  const userData = JSON.parse(localStorage.getItem('user'));
+
   return (
     <div>
       <Topbar />
@@ -25,18 +27,18 @@ const Account = () => {
           <div className="myInfo">
             <div className="myInfoHeader">My Info</div>
             <div className="myInfoContainer">
-              <div className="textContainer">
-                <div className="textTitle">Full Name</div>
-                <div className="textData">Alex Tran</div>
-              </div>
-              <div className="textContainer">
-                <div className="textTitle">Email Address</div>
-                <div className="textData">qnam.can@gmail.com</div>
-              </div>
-              <div className="textContainer">
-                <div className="textTitle">Phone Number</div>
-                <div className="textData">8077098998</div>
-              </div>
+              {userData && (
+                <>
+                  <div className="textContainer">
+                    <div className="textTitle">Full Name</div>
+                    <div className="textData">{userData.name}</div>
+                  </div>
+                  <div className="textContainer">
+                    <div className="textTitle">Email Address</div>
+                    <div className="textData">{userData.email}</div>
+                  </div>
+                </>
+              )}
               <button className="secondary-btn">Edit My Info</button>
               <a className="nobg-btn">Change My Password</a>
             </div>
