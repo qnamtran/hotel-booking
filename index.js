@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 const connect = async () => {
   try {
     await mongoose.connect(process.env.ATLAS_URI);
-    console.log("Connected to mongoDB");
+    console.log("Connected to mongoDB.");
   } catch (error) {
     throw error;
   }
@@ -35,27 +35,18 @@ app.get('/', (req, res) => {
 });
 
 
-// Route to serve CRUD pages within AdminPortal folder
+// Route to serve pages within AdminPortal folder
 app.get('/AdminPortal/:page', (req, res) => {
   const page = req.params.page;
   const fileName = `${page}.html`;
   res.sendFile(path.join(path.resolve(), 'AdminPortal', fileName));
 });
 
-// API routes
-app.use('/api/room-bookings', roomBookingsRoute);
-app.use('/api/employees', employeesRoute);
-app.use('/api/cleaning-duties', cleaningDutiesRoute);
-app.use('/api/rooms', roomsRoute);
-
-
-// /* ports
-// const PORT = 8080;
-
-// app.listen(PORT, () => {
-//   console.log(`Server is running on PORT ${PORT}`);
-// });
-// */
+// API routes (Quang, remember when you said "why is this called API when we dont have an API folder? yeah i accidentally named them all "api/whatever" instead of "routes/whatever", lol)
+app.use('/routes/roomBookings', roomBookingsRoute);
+app.use('/routes/employees', employeesRoute);
+app.use('/routes/cleaningDuties', cleaningDutiesRoute);
+app.use('/routes/rooms', roomsRoute);
 
 app.listen(8800, () => {
   connect();

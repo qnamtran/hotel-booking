@@ -1,11 +1,141 @@
+<!-- vvvvvv  Notes from Mal  vvvvvvvv -->
+
+<!--           KNOWN ISSUES       :( -->
+<!-- 1. Output is displaying IDs instead of names -->
+<!-- 2. Couldn't figure out how to make editing a request work, so it is not included for now -->
+<!-- 3. No styling yet (i cant make things look nice) -->
+<!-- 4. Assigned Employee displaying as "unassigned" -->
+
+<!--           SUCCESSES          :) -->
+<!-- 1. Requests tested in Postman, all seems to be working well there -->
+<!-- 2. Creating a cleaning task is functioning -->
+<!-- 3. Delete button is functioning -->
+<!-- 4. I haven't cried yet (came pretty close though!) -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Portal: Cleaning</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cleaning Tasks</title>
 </head>
 <body>
-  <h1>Cleaning</h1>
+<h1>Cleaning Tasks</h1>
+
+<!-- form to create a cleaning task -->
+<form id="cleaningForm">
+    <label for="employee">Select Employee:</label>
+    <select id="employee" required>
+        <!-- options will be populated dynamically -->
+    </select><br>
+
+    <label for="room">Select Room/Area:</label>
+    <select id="room" required>
+        <!-- options will be populated dynamically -->
+    </select><br>
+
+    <button type="submit">Create</button>
+</form>
+
+<!-- container to display cleaning tasks -->
+<div id="cleaningTasks">
+    <!-- cleaning tasks will be displayed here -->
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // fetch all employees and populate the dropdown
+    fetch('/routes/employees')
+        .then(response => response.json())
+        .then(data => {
+            const employeeDropdown = document.getElementById('employee');
+            data.forEach(employee => {
+                const option = document.createElement('option');
+                option.value = employee._id;
+                option.textContent = employee.name;
+                employeeDropdown.appendChild(option);
+            });
+        });
+
+    // fetch rooms and populate the dropdown
+    fetch('/routes/rooms')
+        .then(response => response.json())
+        .then(data => {
+            const roomDropdown = document.getElementById('room');
+            data.forEach(room => {
+                const option = document.createElement('option');
+                option.value = room._id;
+                option.textContent = room.roomNumber;
+                roomDropdown.appendChild(option);
+            });
+        });
+
+    // function to fetch and display all cleaning tasks
+    function displayCleaningTasks() {
+        fetch('/routes/cleaningDuties')
+            .then(response => response.json())
+            .then(data => {
+                const cleaningTasksContainer = document.getElementById('cleaningTasks');
+                cleaningTasksContainer.innerHTML = ''; // clear previous tasks
+                data.forEach(task => {
+                    const taskDiv = document.createElement('div');
+                    taskDiv.innerHTML = `
+                        <p>Room/Area: ${task.roomOrArea}</p>
+                        <p>Assigned Employee: ${task.assignedEmployee ? task.assignedEmployee.name : 'Not assigned'}</p>
+                        <button class="deleteBtn" data-id="${task._id}">Delete</button>
+                    `;
+                    cleaningTasksContainer.appendChild(taskDiv);
+                });
+
+                // attach event listeners to delete buttons
+                const deleteButtons = document.querySelectorAll('.deleteBtn');
+                deleteButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const taskId = this.getAttribute('data-id');
+                        deleteTask(taskId);
+                    });
+                });
+            });
+    }
+
+    // function to delete a cleaning task
+    function deleteTask(taskId) {
+        fetch(`/routes/cleaningDuties/${taskId}`, {
+            method: 'DELETE'
+        })
+        .then(() => {
+            displayCleaningTasks(); // refresh tasks after deletion
+        });
+    }
+
+    // display cleaning tasks
+    displayCleaningTasks();
+
+    // event listener for cleaning form submission
+    document.getElementById('cleaningForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // prevent default form submission
+
+        const employeeId = document.getElementById('employee').value;
+        const roomId = document.getElementById('room').value;
+
+        // create a new cleaning task
+        fetch('/routes/cleaningDuties/request', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                roomNumber: roomId,
+                userId: employeeId
+            })
+        })
+        .then(response => response.json())
+        .then(() => {
+            displayCleaningTasks(); // refresh tasks after creation
+        });
+    });
+});
+</script>
 </body>
 </html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Portal - Employee Management</title>
+</head>
+<body>
+<h1>Employee Management</h1>
+
+<!-- form to create a new employee -->
+<form id="createEmployeeForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" required><br>
+    <label for="role">Role:</label>
+    <input type="text" id="role" required><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" required><br>
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" required><br>
+    <button type="submit">Create Employee</button>
+</form>
+
+<!-- container to display employees -->
+<div id="employeeList">
+    <!-- employee list will be displayed here -->
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // function to fetch and display all employees
+    function displayEmployees() {
+        fetch('/routes/employees')
+            .then(response => response.json())
+            .then(data => {
+                const employeeListContainer = document.getElementById('employeeList');
+                employeeListContainer.innerHTML = ''; // clear previous employees
+                data.forEach(employee => {
+                    const employeeDiv = document.createElement('div');
+                    employeeDiv.innerHTML = `
+                        <p>Name: ${employee.name}</p>
+                        <p>Role: ${employee.role}</p>
+                        <p>Email: ${employee.contactDetails ? employee.contactDetails.email : 'N/A'}</p>
+                        <p>Phone: ${employee.contactDetails ? employee.contactDetails.phone : 'N/A'}</p>
+                        <button class="deleteBtn" data-id="${employee._id}">Delete</button>
+                        <button class="editBtn" data-id="${employee._id}">Edit</button>
+                    `;
+                    employeeListContainer.appendChild(employeeDiv);
+                });
+
+                // attach event listeners to delete buttons
+                const deleteButtons = document.querySelectorAll('.deleteBtn');
+                deleteButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const employeeId = this.getAttribute('data-id');
+                        deleteEmployee(employeeId);
+                    });
+                });
+
+                // attach event listeners to edit buttons
+                const editButtons = document.querySelectorAll('.editBtn');
+                editButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const employeeId = this.getAttribute('data-id');
+                        // implement edit functionality here
+                        alert(`Editing employee with ID: ${employeeId}`);
+                    });
+                });
+            });
+    }
+
+    // function to delete an employee
+    function deleteEmployee(employeeId) {
+        fetch(`/routes/employees/${employeeId}`, {
+            method: 'DELETE'
+        })
+        .then(() => {
+            displayEmployees(); // refresh employee list after deletion
+        });
+    }
+
+    // function to clear input fields
+    function clearInputFields() {
+        document.getElementById('name').value = '';
+        document.getElementById('role').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('phone').value = '';
+    }
+
+    // display initial list of employees
+    displayEmployees();
+
+    // event listener for create employee form submission
+    document.getElementById('createEmployeeForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // prevent default form submission
+
+        const name = document.getElementById('name').value;
+        const role = document.getElementById('role').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+
+        // create a new employee
+        fetch('/routes/employees', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                role: role,
+                contactDetails: {
+                    email: email,
+                    phone: phone
+                }
+            })
+        })
+        .then(response => response.json())
+        .then(() => {
+            displayEmployees(); // refresh employee list after creation
+            clearInputFields(); // clear input fields after creation
+        });
+    });
+});
+</script>
+</body>
+</html>
