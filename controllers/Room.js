@@ -2,17 +2,20 @@ import Room from "../models/Room.js";
 
 const roomController = {
     /* Create a new room */
-    async createRoom(req, res) {
-        // Can add data validation here using express-validator
-        try {
-            const newRoom = new Room(req.body);
-            const savedRoom = await newRoom.save();
-            res.json(savedRoom);
-        } catch (error) {
-            // Will add more specific error messages eventually
-            res.status(500).json({ error: error.message });
-        }
-    },
+async createRoom(req, res) {
+    // troubleshooting aaaaahhhhhhh
+    console.log(req.body);
+
+    // Can add data validation here using express-validator
+    try {
+        const newRoom = new Room(req.body);
+        const savedRoom = await newRoom.save();
+        res.json(savedRoom);
+    } catch (error) {
+        // Will add more specific error messages eventually
+        res.status(500).json({ error: error.message });
+    }
+},
 
     /* Get all rooms */
     async getAllRooms(req, res) {

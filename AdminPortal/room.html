@@ -1,0 +1,160 @@
+<!-- vvvvvv  Notes from Mal  vvvvvvvv -->
+
+<!--           KNOWN ISSUES       :( -->
+<!-- 1. create Room button is not displaying anything -->
+<!-- 2. No styling yet (i cant make things look nice) -->
+<!-- 3. Postman test gves this error: "error": "Rooms validation failed: floorNumber: Path `floorNumber` is required., roomNumber: Path `roomNumber` is required., roomType: Path `roomType` is required."
+} -->
+
+
+<!--           SUCCESSES          :) -->
+<!-- 1. vscode console log shows data from create button being passed correctly -->
+<!-- 2. Deleting a room is functioning -->
+<!-- 3. All fields clear after create roome is pressed -->
+<!-- 4. vscode console log shows data from create button being passed correctly -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Portal - Room Management</title>
+</head>
+<body>
+<h1>Room Management</h1>
+
+<!-- Form to create a new room -->
+<form id="createRoomForm">
+    <label for="roomType">Room Type:</label>
+    <select id="roomType" required>
+        <option value="DoubleQueen">Double Queen</option>
+        <option value="SingleKing">Single King</option>
+    </select><br>
+    <label for="roomNumber">Room Number:</label>
+    <input type="number" id="roomNumber" required><br>
+    <label for="floorNumber">Floor Number:</label>
+    <input type="number" id="floorNumber" required><br>
+    <label for="isClean">Is Clean:</label>
+    <input type="checkbox" id="isClean"><br>
+    <label for="isRollinAccessible">Roll-in Accessible:</label>
+    <input type="checkbox" id="isRollinAccessible"><br>
+    <label for="isHearingAccessible">Hearing Accessible:</label>
+    <input type="checkbox" id="isHearingAccessible"><br>
+    <button type="submit">Create Room</button>
+</form>
+
+<!-- Container to display rooms -->
+<div id="roomList">
+    <!-- Room list will be displayed here -->
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to fetch and display all rooms
+    function displayRooms() {
+        fetch('/routes/rooms')
+            .then(response => response.json())
+            .then(data => {
+                const roomListContainer = document.getElementById('roomList');
+                roomListContainer.innerHTML = ''; // Clear previous rooms
+                data.forEach(room => {
+                    const roomDiv = document.createElement('div');
+                    roomDiv.innerHTML = `
+                        <p>Room Type: ${room.roomType}</p>
+                        <p>Room Number: ${room.roomNumber}</p>
+                        <p>Floor Number: ${room.floorNumber}</p>
+                        <p>Is Clean: ${room.isClean ? 'Yes' : 'No'}</p>
+                        <p>Roll-in Accessible: ${room.isRollinAccessible ? 'Yes' : 'No'}</p>
+                        <p>Hearing Accessible: ${room.isHearingAccessible ? 'Yes' : 'No'}</p>
+                        <button class="deleteBtn" data-id="${room._id}">Delete</button>
+                        <button class="editBtn" data-id="${room._id}">Edit</button>
+                    `;
+                    roomListContainer.appendChild(roomDiv);
+                });
+
+                // Attach event listeners to delete buttons
+                const deleteButtons = document.querySelectorAll('.deleteBtn');
+                deleteButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const roomId = this.getAttribute('data-id');
+                        deleteRoom(roomId);
+                    });
+                });
+
+                // Attach event listeners to edit buttons
+                const editButtons = document.querySelectorAll('.editBtn');
+                editButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const roomId = this.getAttribute('data-id');
+                        // Implement edit functionality here
+                        // For now, let's just alert the room ID
+                        alert(`Editing room with ID: ${roomId}`);
+                    });
+                });
+            });
+    }
+
+    // Function to delete a room
+    function deleteRoom(roomId) {
+        fetch(`/routes/rooms/${roomId}`, {
+            method: 'DELETE'
+        })
+        .then(() => {
+            displayRooms(); // Refresh room list after deletion
+        });
+    }
+
+    // Display initial list of rooms
+    displayRooms();
+
+    // Event listener for create room form submission
+    document.getElementById('createRoomForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const roomType = document.getElementById('roomType').value;
+    const roomNumber = document.getElementById('roomNumber').value;
+    const floorNumber = document.getElementById('floorNumber').value;
+    const isClean = document.getElementById('isClean').checked;
+    const isRollinAccessible = document.getElementById('isRollinAccessible').checked;
+    const isHearingAccessible = document.getElementById('isHearingAccessible').checked;
+
+    // Ensure roomNumber and floorNumber are parsed as integers
+    const parsedRoomNumber = parseInt(roomNumber);
+    const parsedFloorNumber = parseInt(floorNumber);
+
+    // Create a new room
+    fetch('/routes/rooms', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            roomType: roomType,
+            roomNumber: parsedRoomNumber,
+            floorNumber: parsedFloorNumber,
+            isClean: isClean,
+            isRollinAccessible: isRollinAccessible,
+            isHearingAccessible: isHearingAccessible
+        })
+    })
+    .then(response => response.json())
+    .then(() => {
+        displayRooms(); // Refresh room list after creation
+        clearInputFields(); // Clear input fields after creation
+    });
+});
+
+
+    // Function to clear input fields
+    function clearInputFields() {
+        document.getElementById('roomType').value = 'DoubleQueen';
+        document.getElementById('roomNumber').value = '';
+        document.getElementById('floorNumber').value = '';
+        document.getElementById('isClean').checked = false;
+        document.getElementById('isRollinAccessible').checked = false;
+        document.getElementById('isHearingAccessible').checked = false;
+    }
+});
+</script>
+</body>
+</html>
