@@ -1,0 +1,115 @@
+<!-- vvvvvv  Notes from Mal  vvvvvvvv -->
+
+<!--           KNOWN ISSUES       :( -->
+<!-- 1. No editing functionaility yet -->
+<!-- 2. No styling yet (i cant make things look nice) -->
+
+<!--           SUCCESSES          :) -->
+<!-- 1. Data is being passed correctly -->
+<!-- 2. Postman tests are working -->
+<!-- 3. Create a room works -->
+<!-- 4. Delete a room works -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Booking</title>
+</head>
+<body>
+    <h1>Room Booking</h1>
+
+    <!-- link back to admin portal homepage -->
+    <p><a href="adminPortal">Back to Admin Portal Homepage</a></p>
+    
+    <!-- form for creating a new booking -->
+    <h2>Create New Booking</h2>
+    <form id="createBookingForm">
+        <label for="roomType">Room Type:</label>
+        <input type="text" id="roomType" name="roomType" required>
+        <label for="checkInDate">Check-In Date:</label>
+        <input type="date" id="checkInDate" name="checkInDate" required>
+        <label for="checkOutDate">Check-Out Date:</label>
+        <input type="date" id="checkOutDate" name="checkOutDate" required>
+        <button type="submit">Create Booking</button>
+    </form>
+
+    <!-- list of existing bookings -->
+    <h2>Existing Bookings</h2>
+    <ul id="bookingList"></ul>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bookingList = document.getElementById('bookingList');
+            const createBookingForm = document.getElementById('createBookingForm');
+
+            // fetch existing bookings and render them
+            fetch('/routes/roomBookings')
+                .then(response => response.json())
+                .then(bookings => renderBookings(bookings))
+                .catch(error => console.error('Error fetching bookings:', error));
+
+            // event listener for form submission (create booking)
+            createBookingForm.addEventListener('submit', event => {
+                event.preventDefault();
+
+                const formData = new FormData(createBookingForm);
+                const newBooking = {
+                    roomType: formData.get('roomType'),
+                    checkInDate: formData.get('checkInDate'),
+                    checkOutDate: formData.get('checkOutDate')
+                };
+
+                fetch('/routes/roomBookings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newBooking)
+                })
+                .then(response => response.json())
+                .then(createdBooking => {
+                    renderBooking(createdBooking);
+                    createBookingForm.reset();
+                })
+                .catch(error => console.error('Error creating booking:', error));
+            });
+
+            // function to render a single booking
+            function renderBooking(booking) {
+                const bookingItem = document.createElement('li');
+                bookingItem.id = booking._id; // set ID for the list item
+                bookingItem.innerHTML = `
+                    <p>Room Type: ${booking.roomType}</p>
+                    <p>Check-In Date: ${new Date(booking.checkInDate).toLocaleDateString()}</p>
+                    <p>Check-Out Date: ${new Date(booking.checkOutDate).toLocaleDateString()}</p>
+                    <button onclick="deleteBooking('${booking._id}')">Delete</button>
+                    <button onclick="editBooking('${booking._id}')">Edit</button>
+                `;
+                bookingList.appendChild(bookingItem);
+            }
+
+            // function to render multiple bookings
+            function renderBookings(bookings) {
+                bookingList.innerHTML = '';
+                bookings.forEach(booking => renderBooking(booking));
+            }
+
+            // function to delete a booking
+            window.deleteBooking = function(id) {
+                fetch(`/routes/roomBookings/${id}`, {
+                    method: 'DELETE'
+                })
+                .then(() => {
+                    document.getElementById(id).remove(); // remove the list item with the corresponding ID
+                })
+                .catch(error => console.error('Error deleting booking:', error));
+            };
+
+            // function to edit a booking here
+            
+        });
+    </script>
+</body>
+</html>

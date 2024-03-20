@@ -23,7 +23,10 @@
 <body>
 <h1>Room Management</h1>
 
-<!-- Form to create a new room -->
+<!-- link back to admin portal homepage -->
+<p><a href="adminPortal">Back to Admin Portal Homepage</a></p>
+
+<!-- form to create a new room -->
 <form id="createRoomForm">
     <label for="roomType">Room Type:</label>
     <select id="roomType" required>
@@ -43,20 +46,20 @@
     <button type="submit">Create Room</button>
 </form>
 
-<!-- Container to display rooms -->
+<!-- container to display rooms -->
 <div id="roomList">
-    <!-- Room list will be displayed here -->
+    <!-- room list will be displayed here -->
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Function to fetch and display all rooms
+    // function to fetch and display all rooms
     function displayRooms() {
         fetch('/routes/rooms')
             .then(response => response.json())
             .then(data => {
                 const roomListContainer = document.getElementById('roomList');
-                roomListContainer.innerHTML = ''; // Clear previous rooms
+                roomListContainer.innerHTML = ''; // clear previous rooms
                 data.forEach(room => {
                     const roomDiv = document.createElement('div');
                     roomDiv.innerHTML = `
@@ -72,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     roomListContainer.appendChild(roomDiv);
                 });
 
-                // Attach event listeners to delete buttons
+                // attach event listeners to delete buttons
                 const deleteButtons = document.querySelectorAll('.deleteBtn');
                 deleteButtons.forEach(btn => {
                     btn.addEventListener('click', function() {
@@ -81,35 +84,34 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 });
 
-                // Attach event listeners to edit buttons
+                // attach event listeners to edit buttons
                 const editButtons = document.querySelectorAll('.editBtn');
                 editButtons.forEach(btn => {
                     btn.addEventListener('click', function() {
                         const roomId = this.getAttribute('data-id');
-                        // Implement edit functionality here
-                        // For now, let's just alert the room ID
+                        // implement edit functionality here
                         alert(`Editing room with ID: ${roomId}`);
                     });
                 });
             });
     }
 
-    // Function to delete a room
+    // function to delete a room
     function deleteRoom(roomId) {
         fetch(`/routes/rooms/${roomId}`, {
             method: 'DELETE'
         })
         .then(() => {
-            displayRooms(); // Refresh room list after deletion
+            displayRooms(); // refresh room list after deletion
         });
     }
 
-    // Display initial list of rooms
+    // display list of rooms
     displayRooms();
 
-    // Event listener for create room form submission
+    // event listener for create room form submission
     document.getElementById('createRoomForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault(); // prevent default form submission
 
     const roomType = document.getElementById('roomType').value;
     const roomNumber = document.getElementById('roomNumber').value;
@@ -118,11 +120,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const isRollinAccessible = document.getElementById('isRollinAccessible').checked;
     const isHearingAccessible = document.getElementById('isHearingAccessible').checked;
 
-    // Ensure roomNumber and floorNumber are parsed as integers
+    // ensure roomNumber and floorNumber are parsed as integers
     const parsedRoomNumber = parseInt(roomNumber);
     const parsedFloorNumber = parseInt(floorNumber);
 
-    // Create a new room
+    // create a new room
     fetch('/routes/rooms', {
         method: 'POST',
         headers: {
@@ -139,13 +141,13 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .then(response => response.json())
     .then(() => {
-        displayRooms(); // Refresh room list after creation
-        clearInputFields(); // Clear input fields after creation
+        displayRooms(); // refresh room list after creation
+        clearInputFields(); // clear input fields after creation
     });
 });
 
 
-    // Function to clear input fields
+    // function to clear input fields
     function clearInputFields() {
         document.getElementById('roomType').value = 'DoubleQueen';
         document.getElementById('roomNumber').value = '';
