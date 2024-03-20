@@ -1,65 +1,57 @@
 import Room from "../models/Room.js";
 
-const roomController = {
-    /* Create a new room */
-async createRoom(req, res) {
-    // troubleshooting aaaaahhhhhhh
-    console.log(req.body);
+// Create room
+export const createRoom = async (req, res, next) => {
+  const newRoom = new Room(req.body);
 
-    // Can add data validation here using express-validator
-    try {
-        const newRoom = new Room(req.body);
-        const savedRoom = await newRoom.save();
-        res.json(savedRoom);
-    } catch (error) {
-        // Will add more specific error messages eventually
-        res.status(500).json({ error: error.message });
-    }
-},
-
-    /* Get all rooms */
-    async getAllRooms(req, res) {
-        try {
-            // Will add more specific error messages eventually
-            const rooms = await Room.find();
-            res.json(rooms);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    },
-
-    /* Get Room by ID */
-    async getRoomByID(req, res) {
-        try {
-            // Will add more specific error messages eventually
-            const rooms = await Room.findById(req.params.id);
-            res.json(rooms);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    },
-
-    /* Update Room by ID */
-    async updateRoomByID(req, res) {
-        try {
-            const updatedRoom = await Room.findByIdAndUpdate(req.params.id, req.body, { new: true });
-            res.json(updatedRoom);
-        } catch (error) {
-            // Will add more specific error messages eventually
-            res.status(500).json({ error: error.message });
-        }
-    },
-
-    /* Delete Room by ID */
-    async deleteRoomByID(req, res) {
-        try {
-            const deletedRoom = await Room.findByIdAndDelete(req.params.id);
-            res.json(deletedRoom);
-        } catch (error) {
-            // Will add more specific error messages eventually
-            res.status(500).json({ error: error.message });
-        }
-    }
+  try {
+    const savedRoom = await newRoom.save();
+    res.status(200).json(savedRoom);
+  } catch (err) {
+    next(err);
+  }
 };
 
-export default roomController;
+// Edit room
+export const updateRoom = async (req, res, next) => {
+  try {
+    const updatedRoom = await Room.findByIdAndUpdate(
+      req.params.id,
+      { $set: req.body },
+      { new: true }
+    );
+    res.status(200).json(updatedRoom);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Delete room
+export const deleteRoom = async (req, res, next) => {
+  try {
+    await Room.findByIdAndDelete(req.params.id);
+    res.status(200).json("Room has been deleted");
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Get room
+export const getRoom = async (req, res, next) => {
+  try {
+    const room = await Room.findById(req.params.id);
+    res.status(200).json(room);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Get all rooms
+export const getRooms = async (req, res, next) => {
+  try {
+    const rooms = await Room.find();
+    res.status(200).json(rooms);
+  } catch (err) {
+    next(err);
+  }
+};

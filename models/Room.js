@@ -1,45 +1,33 @@
-/*
-models represent data structures and validation rules
-*/
+import mongoose, { mongo } from "mongoose";
 
-import mongoose from "mongoose";
+const RoomSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      require: true,
+    },
+    description: {
+      type: String,
+      require: true,
+    },
+    roomNumbers: [{ number: Number, unavailableDates: { type: [Date] } }],
+    maxPeople: {
+      type: Number,
+      require: true,
+    },
+    numberOfBed: {
+      type: Number,
+      require: true,
+    },
+    costPerNight: {
+      type: Number,
+      require: true,
+    },
+    photo: {
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
 
-
-// Enum to map room type to string
-const RoomType = {
-  DoubleQueen: "Double queen",
-  SingleKing: "Single king",
-};
-
-const roomSchema = new mongoose.Schema({
-roomType: {
-  type: String,
-  enum: Object.values(RoomType),
-  required: true,
-},
-roomNumber: {
-  type: Number,
-  required: true,
-},
-floorNumber: {
-  type: Number,
-  required: true,
-},
-isClean: {
-  type: Boolean,
-  default: false,
-},
-isRollinAccessible: {
-  type: Boolean,
-  default: false,
-},
-isHearingAccessible: {
-  type: Boolean,
-  default: false,
-},
-});
-
-// roomSchema can be replaced with whatever the schema is actually named when created
-const Rooms = mongoose.model('Rooms', roomSchema);
-
-export default Rooms;
+export default mongoose.model("Room", RoomSchema);

@@ -47,6 +47,7 @@ app.use('/routes/roomBookings', roomBookingsRoute);
 app.use('/routes/employees', employeesRoute);
 app.use('/routes/cleaningDuties', cleaningDutiesRoute);
 app.use('/routes/rooms', roomsRoute);
+app.use('/routes/users', usersRoute);
 
 app.listen(8800, () => {
   connect();
