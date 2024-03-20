@@ -5,7 +5,7 @@ import "./search.css"
 import "../../styles/styles.css"
 import { DateRange } from 'react-date-range';
 import { useState, useRef, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { SearchContext } from "../../context/SearchContext";
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
@@ -14,6 +14,10 @@ import { format } from "date-fns"
 const Search = () => {
     const navigate = useNavigate();
     const { dispatch } = useContext(SearchContext);
+    const location = useLocation();
+
+    // Parse URL parameters to get search criteria
+    const searchParams = new URLSearchParams(location.search);
 
     const [openDate, setOpenDate] = useState(false)
 
@@ -29,10 +33,10 @@ const Search = () => {
 
     // Set default selected options
     const [options, setOptions] = useState({
-        adults: 1,
-        children: 0,
-        beds: 1,
-    })
+        adults: parseInt(searchParams.get('adults'), 10) || 1,
+        children: parseInt(searchParams.get('children'), 10) || 0,
+        beds: parseInt(searchParams.get('beds'), 10) || 1,
+    });
 
     const dateRangeWrapperRef = useRef(null);
 
@@ -51,14 +55,50 @@ const Search = () => {
         };
     }, [dateRangeWrapperRef]);
 
+
+    // Reset filter when refresh page
     useEffect(() => {
         const storedSearchInput = JSON.parse(localStorage.getItem('searchInput'));
-        if (storedSearchInput) {
+        if (storedSearchInput && storedSearchInput.options) {
             setDates(storedSearchInput.dates);
             setOptions(storedSearchInput.options);
+        } else {
+            // If no stored search input or options are undefined, clear filters
+            setDates([
+                {
+                    startDate: new Date(),
+                    endDate: new Date(),
+                    key: 'selection',
+                },
+            ]);
+            setOptions({
+                adults: 1,
+                children: 0,
+                beds: 1,
+            });
         }
+
+        const handleBeforeUnload = () => {
+            localStorage.removeItem('searchInput');
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
     }, []);
 
+    // // Update the search parameters in the URL when options change
+    // useEffect(() => {
+    //     const searchParams = new URLSearchParams();
+    //     searchParams.append('adults', options.adults);
+    //     searchParams.append('children', options.children);
+    //     searchParams.append('beds', options.beds);
+    //     navigate(`?${searchParams.toString()}`);
+    // }, [options, navigate]);
+
+    // Handle increase decrease options
     const handleOption = (name, operation) => {
         setOptions(prev => {
             return {
@@ -82,7 +122,8 @@ const Search = () => {
         );
 
         dispatch({ type: "NEW_SEARCH", payload: { dates, options } });
-        navigate('/rooms');
+        navigate(`/rooms?${searchParams.toString()}`);
+
     };
 
     return (
