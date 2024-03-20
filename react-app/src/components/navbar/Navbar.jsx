@@ -93,10 +93,7 @@ const Navbar = () => {
       if (!password) {
         setPasswordError('Please enter your password.');
         return;
-      } else if (password.length < 8) {
-        setPasswordError('Please enter a valid password.');
-        return;
-      }
+      } 
       const res = await axios.post('/auth/login', { email, password });
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
       navigate("/")
