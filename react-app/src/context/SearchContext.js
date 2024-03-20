@@ -3,9 +3,9 @@ import { createContext, useReducer } from "react";
 const INITIAL_STATE = {
   dates: [],
   options: {
-    adult: undefined,
-    children: undefined,
-    beds: undefined,
+    adults: 1,
+    children: 0,
+    beds: 1,
   },
 };
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState, useEffect, useContext } from "react";
+import { useLocation, useNavigate } from 'react-router-dom';
 import "./list.css"
 import "../../styles/styles.css"
 import Topbar from '../../components/topbar/Topbar'
@@ -11,26 +12,47 @@ import useFetch from "../../hooks/useFetch";
 import { SearchContext } from "../../context/SearchContext";
 
 const List = () => {
+  // Get URL location and navigate function
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { options } = useContext(SearchContext);
+  const [filteredData, setFilteredData] = useState([]);
+  
+  // Parse URL parameters to get search criteria
+  const searchParams = new URLSearchParams(location.search);
+  const adults = parseInt(searchParams.get('adults')) || (options && options.adults) || 1;
+  const children = parseInt(searchParams.get('children')) || (options && options.children) || 0;
+  const beds = parseInt(searchParams.get('beds')) || (options && options.beds) || 1;
+  
+
+
   const { data, loading, error, reFetch } = useFetch(
-    `/rooms`
+    `/rooms?adults=${adults}&children=${children}&beds=${beds}`
   );
 
-  const { options } = useContext(SearchContext);
 
-  const [filteredData, setFilteredData] = useState([]);
+
+  useEffect(() => {
+    // Update URL with new search parameters
+    const params = new URLSearchParams();
+    params.append('adults', options.adults);
+    params.append('children', options.children);
+    params.append('beds', options.beds);
+    navigate({ search: params.toString() });
+  }, [options, navigate]);
 
   useEffect(() => {
     // Filter rooms based on search criteria
     const filteredRooms = data.filter(room => {
-      const { adults, children, beds } = options;
+      // const { adults, children, beds } = options;
       const totalGuests = adults + children;
       return room.maxPeople >= totalGuests && room.numberOfBed >= beds;
     });
     setFilteredData(filteredRooms);
 
     // Save filtered data to localStorage
-    localStorage.setItem('filteredData', JSON.stringify(filteredRooms));
-  }, [data, options]);
+    // localStorage.setItem('filteredData', JSON.stringify(filteredRooms));
+  }, [data, adults, children, beds]);
 
 
   // Calculate available room count for each room
