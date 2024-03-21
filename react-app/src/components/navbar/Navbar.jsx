@@ -15,9 +15,8 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
 const Navbar = () => {
-  const {user, loading, error, dispatch } = useContext(AuthContext);
+  const { user, loading, error, dispatch } = useContext(AuthContext);
   const navigate = useNavigate()
-
 
   // State to track password visibility
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +25,7 @@ const Navbar = () => {
   const [email, setEmail] = useState('');
 
   // State to track full name input value
-  const [fname, setFname] = useState('');
+  const [name, setName] = useState('');
 
   // State to track password input value
   const [password, setPassword] = useState('');
@@ -38,7 +37,7 @@ const Navbar = () => {
   const [emailError, setEmailError] = useState('');
 
   // State to track full name validation error 
-  const [fnameError, setFnameError] = useState('');
+  const [nameError, setNameError] = useState('');
 
   // State to track password validation error 
   const [passwordError, setPasswordError] = useState('');
@@ -54,7 +53,7 @@ const Navbar = () => {
 
   // Function to toggle password visibility
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    setShowPassword(prevState => !prevState);
   };
 
   // Function to handle email input change
@@ -64,9 +63,9 @@ const Navbar = () => {
   };
 
   // Function to handle full name input change
-  const handleFnameChange = (event) => {
-    setFname(event.target.value);
-    setFnameError(''); // Clear previous error message when input changes
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+    setNameError(''); // Clear previous error message when input changes
   };
 
   // Function to handle password input change
@@ -82,57 +81,14 @@ const Navbar = () => {
   };
 
 
-  // Function to handle login form submission
-  const handleLoginSubmit = async () => {
-    try {
-      // Email validation
-      if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-        setEmailError('Please enter a valid email address.');
-        return;
-      }
-      if (!password) {
-        setPasswordError('Please enter your password.');
-        return;
-      } 
-      const res = await axios.post('/auth/login', { email, password });
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
-      navigate("/")
-      // Assuming the response contains user data or token, handle it accordingly
-      console.log(res.data); // You may want to store the token in local storage or cookie
-    } catch (err) {
-      // Handle login error
-      dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
-    }
-  };
-
-  // Function to handle register form submission
-  const handleRegisterSubmit = () => {
-    // Full name validation
-    if (!fname) {
-      setFnameError('Please enter your full name');
-      return;
-    }
-    // Email validation
-    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-      setEmailError('Please enter a valid email address.');
-      return;
-    }
-    // Create Password validation
-    if (!createPassword || createPassword.length < 8) {
-      setCreatePasswordError('Please create a valid password');
-      return;
-    }
-    //add other password validation
-  };
-
   // Function to handle close button click
   const handleClose = () => {
+    setName('');
     setEmail('');
-    setFname('');
     setPassword('');
     setCreatePassword('');
     setEmailError('');
-    setFnameError('');
+    setNameError('');
     setPasswordError('');
     setCreatePasswordError('');
   };
@@ -157,15 +113,67 @@ const Navbar = () => {
     setIsRegisterModalOpen(false);
   };
 
+  // Function to handle login form submission
+  const handleLoginSubmit = async () => {
+    try {
+      // Email validation
+      if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+        setEmailError('Please enter a valid email address.');
+        return;
+      }
+      if (!password) {
+        setPasswordError('Please enter your password.');
+        return;
+      }
+      const res = await axios.post('/auth/login', { email, password });
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
+      navigate("/")
+    } catch (err) {
+      // Handle login error
+      dispatch({ type: "LOGIN_FAILURE", payload: err.response.data });
+    }
+  };
+
+  // Function to handle register form submission
+  const handleRegisterSubmit = async () => {
+    try {
+      // Full name validation
+      if (!name) {
+        setNameError('Please enter your full name');
+        return;
+      }
+      // Email validation
+      if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+        setEmailError('Please enter a valid email address.');
+        return;
+      }
+      // Create Password validation
+      if (!createPassword || createPassword.length < 8) {
+        setCreatePasswordError('Password must have minimum 8 characters');
+        return;
+      }
+
+      const res = await axios.post('/auth/register', { name, email, password });
+
+      if (res.status === 200) {
+        // Redirecting the user to the login page
+        closeRegisterModal() // Close the registration modal
+      }
+    } catch (err) {
+
+    }
+
+  };
+
   return (
     <div className="navbar">
       <div className="navContainer">
         <Link to='/'><span className="logo">West Bestern</span></Link>
         {user ? (
-        <div className="user-account">
-          <Link to="/account"><button className="secondary-btn rounded-btn">{user.name} <span className="icon"><FontAwesomeIcon icon={faUser} /></span></button></Link>
-        </div>
-      )  : (
+          <div className="user-account">
+            <Link to="/account"><button className="secondary-btn rounded-btn">{user.name} <span className="icon"><FontAwesomeIcon icon={faUser} /></span></button></Link>
+          </div>
+        ) : (
           <div className="navItems">
             <Popup trigger=
               {<button className="rounded-btn secondary-btn ">Login</button>}
@@ -214,7 +222,7 @@ const Navbar = () => {
                           </div>
                           <div className="passwordOptions">
                             <div className="checkboxItem">
-                              <input type="checkbox" id='showPassword' className='checkBox' onChange={togglePasswordVisibility} />
+                              <input type="checkbox" id='showPassword' className='checkBox' checked={showPassword} onChange={togglePasswordVisibility} />
                               <label htmlFor='showPassword'>Show Password</label>
                             </div>
                             <a href="" className='nobg-btn forgot-pw-btn'>Forgot Password?</a>
@@ -262,12 +270,12 @@ const Navbar = () => {
                             <input
                               type="text"
                               placeholder="Enter Your Full Name"
-                              id="fname"
+                              id="name"
                               className="input-md"
-                              value={fname}
-                              onChange={handleFnameChange}
+                              value={name}
+                              onChange={handleNameChange}
                             />
-                            {fnameError && <p className="error-message">{fnameError}</p>}
+                            {nameError && <p className="error-message">{nameError}</p>}
                           </div>
                           <div className="inputItem">
                             <label className='label-md'>Email Address</label>
@@ -295,7 +303,7 @@ const Navbar = () => {
                           </div>
                           <div className="passwordOptions">
                             <div className="checkboxItem">
-                              <input type="checkbox" id='showPassword' className='checkBox' onChange={togglePasswordVisibility} />
+                              <input type="checkbox" id='showPassword' className='checkBox' checked={showPassword} onChange={togglePasswordVisibility} />
                               <label htmlFor='showPassword'>Show Password</label>
                             </div>
                           </div>
