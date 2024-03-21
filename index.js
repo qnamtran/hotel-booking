@@ -8,6 +8,7 @@ import cleaningDutiesRoute from './routes/cleaningDuties.js';
 import employeesRoute from './routes/employees.js';
 import roomsRoute from './routes/rooms.js';
 import roomBookingsRoute from './routes/roomBookings.js';
+import usersRoute from './routes/users.js'
 
 const app = express();
 dotenv.config();

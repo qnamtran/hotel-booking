@@ -4,8 +4,8 @@ import {
   getUser,
   getUsers,
   updateUser,
-} from "..\controllers\User.js";
-import { verifyAdmin, verifyToken, verifyUser } from "../utils/verifyToken.js"; // this is in quangs code
+} from "../controllers/user.js";
+import { verifyAdmin, verifyToken, verifyUser } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
