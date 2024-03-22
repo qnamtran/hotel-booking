@@ -30,17 +30,30 @@ mongoose.connection.on("disconnected", () => {
 app.use(express.json());
 app.use(cors());
 
+
 // Route to serve adminPortal.html as index page
 app.get('/', (req, res) => {
   res.sendFile(path.join(path.resolve(), 'AdminPortal', 'adminPortal.html'));
 });
 
+// Route to serve cleaning.html
+app.get('/AdminPortal/cleaning', (req, res) => {
+  res.sendFile(path.join(path.resolve(), 'AdminPortal', 'cleaning.html'));
+});
 
-// Route to serve pages within AdminPortal folder
-app.get('/AdminPortal/:page', (req, res) => {
-  const page = req.params.page;
-  const fileName = `${page}.html`;
-  res.sendFile(path.join(path.resolve(), 'AdminPortal', fileName));
+// Route to serve employee.html
+app.get('/AdminPortal/employee', (req, res) => {
+  res.sendFile(path.join(path.resolve(), 'AdminPortal', 'employee.html'));
+});
+
+// Route to serve room.html
+app.get('/AdminPortal/room', (req, res) => {
+  res.sendFile(path.join(path.resolve(), 'AdminPortal', 'room.html'));
+});
+
+// Route to serve roomBooking.html
+app.get('/AdminPortal/roomBooking', (req, res) => {
+  res.sendFile(path.join(path.resolve(), 'AdminPortal', 'roomBooking.html'));
 });
 
 // API routes (Quang, remember when you said "why is this called API when we dont have an API folder? yeah i accidentally named them all "api/whatever" instead of "routes/whatever", lol)

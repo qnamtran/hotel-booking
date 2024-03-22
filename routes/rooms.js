@@ -1,5 +1,3 @@
-// had to comment out verifyAdmin because i do not have utils/verifyToken.js
-
 import express from "express";
 import { createRoom, deleteRoom, getRoom, getRooms, updateRoom } from "../controllers/Room.js";
 // import { verifyAdmin } from "../utils/verifyToken.js";

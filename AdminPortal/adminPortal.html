@@ -9,16 +9,11 @@
   <h1>Welcome to the Admin Portal</h1>
 
   <div>
-    <button onclick="navigateToPage('cleaning')">Cleaning Duties</button>
-    <button onclick="navigateToPage('employee')">Employee Management</button>
-    <button onclick="navigateToPage('room')">Room Management</button>
-    <button onclick="navigateToPage('roomBooking')">Room Bookings</button>
+    <a href="/AdminPortal/cleaning">Cleaning Duties</a><br>
+    <a href="/AdminPortal/employee">Employee Management</a><br>
+    <a href="/AdminPortal/room">Room Management</a><br>
+    <a href="/AdminPortal/roomBooking">Room Bookings</a><br>
   </div>
-
-  <script>
-    function navigateToPage(page) {
-      window.location.href = `/AdminPortal/${page}`;
-    }
-  </script>
 </body>
 </html>
+
