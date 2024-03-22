@@ -30,9 +30,6 @@ const Navbar = () => {
   // State to track password input value
   const [password, setPassword] = useState('');
 
-  // State to track password input value
-  const [createPassword, setCreatePassword] = useState('');
-
   // State to track email validation error 
   const [emailError, setEmailError] = useState('');
 
@@ -41,9 +38,6 @@ const Navbar = () => {
 
   // State to track password validation error 
   const [passwordError, setPasswordError] = useState('');
-
-  // State to track create password validation error 
-  const [createPasswordError, setCreatePasswordError] = useState('');
 
   // State to track whether the login modal is open
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -74,23 +68,15 @@ const Navbar = () => {
     setPasswordError(''); // Clear previous error message when input changes
   };
 
-  // Function to handle password input change
-  const handleCreatePasswordChange = (event) => {
-    setCreatePassword(event.target.value);
-    setCreatePasswordError(''); // Clear previous error message when input changes
-  };
-
 
   // Function to handle close button click
   const handleClose = () => {
     setName('');
     setEmail('');
     setPassword('');
-    setCreatePassword('');
     setEmailError('');
     setNameError('');
     setPasswordError('');
-    setCreatePasswordError('');
   };
 
   // Function to open login modal
@@ -148,16 +134,18 @@ const Navbar = () => {
         return;
       }
       // Create Password validation
-      if (!createPassword || createPassword.length < 8) {
-        setCreatePasswordError('Password must have minimum 8 characters');
+      if (!password || password.length < 8) {
+        setPasswordError('Password must have minimum 8 characters');
         return;
       }
 
       const res = await axios.post('/auth/register', { name, email, password });
 
       if (res.status === 200) {
+        // Close the registration modal
+        closeRegisterModal();
         // Redirecting the user to the login page
-        closeRegisterModal() // Close the registration modal
+        openLoginModal();
       }
     } catch (err) {
 
@@ -296,10 +284,10 @@ const Navbar = () => {
                               placeholder="Minimum 8 characters"
                               id="password"
                               className="input-md"
-                              value={createPassword}
-                              onChange={handleCreatePasswordChange}
+                              value={password}
+                              onChange={handlePasswordChange}
                             />
-                            {createPasswordError && <p className="error-message">{createPasswordError}</p>}
+                            {passwordError && <p className="error-message">{passwordError}</p>}
                           </div>
                           <div className="passwordOptions">
                             <div className="checkboxItem">
