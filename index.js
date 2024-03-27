@@ -30,9 +30,14 @@ mongoose.connection.on("disconnected", () => {
 app.use(express.json());
 app.use(cors());
 
-
-// Route to serve adminPortal.html as index page
+// Route to serve adminLogin.html 
 app.get('/', (req, res) => {
+  res.sendFile(path.join(path.resolve(), 'AdminPortal', 'adminLogin.html'));
+});
+
+
+// Route to serve adminPortal.html 
+app.get('/AdminPortal', (req, res) => {
   res.sendFile(path.join(path.resolve(), 'AdminPortal', 'adminPortal.html'));
 });
 

@@ -3,10 +3,13 @@ import employeeController from '../controllers/Employee.js';
 
 const router = express.Router();
 
+router.post('/login', employeeController.handleLogin);
 router.post('/', employeeController.createEmployee);
 router.get('/', employeeController.getAllEmployees);
 router.get('/:id', employeeController.getEmployeeByID);
 router.put('/:id', employeeController.updateEmployeeByID);
 router.delete('/:id', employeeController.deleteEmployeeByID);
+
+
 
 export default router;
