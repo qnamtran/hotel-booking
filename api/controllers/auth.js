@@ -19,6 +19,7 @@ export const register = async (req, res, next) => {
     next(err);
   }
 };
+
 export const login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -43,6 +44,40 @@ export const login = async (req, res, next) => {
       })
       .status(200)
       .json({ details: { ...otherDetails }, isAdmin });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const changePassword = async (req, res, next) => {
+  try {
+    const { userId, currentPassword, newPassword } = req.body;
+
+    // Find the user by ID
+    const user = await User.findById(userId);
+    // if (!user) {
+    //   return next(createError(404, "User not found"));
+    // }
+
+    // Check if the current password provided matches the stored password
+    const isPasswordCorrect = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+    if (!isPasswordCorrect) {
+      return next(createError(400, "Incorrect current password"));
+    }
+
+    // Generate a new hash for the new password
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(newPassword, salt);
+
+    // Update the user's password
+    user.password = hash;
+    await user.save();
+
+    // Send a success response
+    res.status(200).send("Password updated successfully");
   } catch (err) {
     next(err);
   }
