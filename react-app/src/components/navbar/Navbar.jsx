@@ -217,7 +217,7 @@ const Navbar = () => {
                           </div>
                         </div>
                         <button disabled={loading} className='primary-btn' onClick={handleLoginSubmit}>Login</button>
-                        {error && <span>{error.message}</span>}
+                        {error && <p className="error-message">{error.message}</p>}
                         <div className="register">
                           <p>Don't have an account?</p>
                           <a className='nobg-btn accent-btn' onClick={() => {
