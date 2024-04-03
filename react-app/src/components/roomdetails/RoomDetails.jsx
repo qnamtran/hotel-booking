@@ -9,7 +9,7 @@ const RoomDetails = ({ roomDetailData, availableRoomCount }) => {
     return (
         <div className="roomDetails">
             <div className="roomDetailsContainer">
-                <div className="roomImage"><img src="https://a0.muscache.com/im/pictures/airflow/Hosting-1015487761074565473/original/b597e6c3-d7db-49c1-a317-fafca0d37478.jpg?im_w=1440" alt="" /></div>
+                <div className="roomImage"><img src={roomDetailData.photo} alt="" /></div>
                 <div className="roomDetailsContent">
                     <div className="roomAvailableCount"><span>{availableRoomCount}</span> available room(s)</div>
                     <div className="roomInformation">
