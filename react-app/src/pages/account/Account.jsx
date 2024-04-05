@@ -27,7 +27,7 @@ const Account = () => {
   const [newPassword, setNewPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [error, setError] = useState('');
-
+  const [successMessage, setSuccessMessage] = useState('');
 
   // Function to toggle password visibility
   const togglePasswordVisibility = () => {
@@ -52,9 +52,7 @@ const Account = () => {
 
       if (res.status === 200) {
         // Reload the page
-        window.location.reload();
-        // Close the change password modal
-        navigate("/account")
+        setSuccessMessage('Password is successfully updated');
       }
     } catch (err) {
       setError(err.response.data);
@@ -66,6 +64,7 @@ const Account = () => {
     setNewPassword('');
     setPasswordError('')
     setError('');
+    setSuccessMessage('');
   }
 
   // State to track whether the login modal is open
@@ -165,6 +164,7 @@ const Account = () => {
                             </div>
                           </div>
                           <button className='primary-btn' onClick={handlePasswordChange}>Update Password</button>
+                          {successMessage && <p className='success-message'>{successMessage}</p>}
                         </div>
                       </div>
                     </div>
