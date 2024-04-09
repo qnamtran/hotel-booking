@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from "axios";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,7 +14,7 @@ import 'reactjs-popup/dist/index.css';
 
 const RoomDetails = ({ roomDetailData, availableRoomCount }) => {
     const navigate = useNavigate();
-    const [selectedRooms, setSelectedRooms] = useState([]);
+    const [selectedRoomNumber, setSelectedRoomNumber] = useState(null);
     const { dates } = useContext(SearchContext);
 
     const getDatesInRange = (startDate, endDate) => {
@@ -41,28 +41,20 @@ const RoomDetails = ({ roomDetailData, availableRoomCount }) => {
         return !isFound;
     };
 
-    const handleSelect = (e) => {
-        const checked = e.target.checked;
-        const value = e.target.value;
-        setSelectedRooms(
-            checked
-                ? [...selectedRooms, value]
-                : selectedRooms.filter((roomDetailData) => roomDetailData !== value)
-        );
+    const handleSelect = (roomNumberId) => {
+        setSelectedRoomNumber(roomNumberId);
     };
 
     const handleReserve = async () => {
         try {
-            await Promise.all(
-                selectedRooms.map((roomId) => {
-                    const res = axios.put(`/rooms/availability/${roomId}`, {
-                        dates: alldates,
-                    });
-                    return res.data;
-                })
-            );
+            const res = await axios.put(`/rooms/availability/${selectedRoomNumber}`, {
+                dates: alldates,
+            });
+            console.log(res.data);
             navigate("/");
-        } catch (err) { }
+        } catch (err) {
+            console.error(err);
+        }
     };
     return (
         <div className="roomDetails">
@@ -157,12 +149,15 @@ const RoomDetails = ({ roomDetailData, availableRoomCount }) => {
                                                     <h3>Select available room number</h3>
                                                     <div className="selectRoom">
                                                         {roomDetailData.roomNumbers.map((roomNumber) => (
-                                                            <div className="checkboxItem" key={roomNumber._id}>
+                                                            <div className="radioItem" key={roomNumber._id}>
                                                                 <input
-                                                                    className='checkBox'
+                                                                    className='radioButton'
                                                                     type="radio"
+                                                                    id={roomNumber._id}
+                                                                    name="roomNumber"
                                                                     value={roomNumber._id}
-                                                                    onChange={handleSelect}
+                                                                    onChange={() => handleSelect(roomNumber._id)}
+                                                                    checked={selectedRoomNumber === roomNumber._id}
                                                                     disabled={!isAvailable(roomNumber)}
                                                                 />
                                                                 <label>{roomNumber.number}</label>
