@@ -23,14 +23,10 @@ const List = () => {
   const adults = parseInt(searchParams.get('adults')) || (options && options.adults) || 1;
   const children = parseInt(searchParams.get('children')) || (options && options.children) || 0;
   const beds = parseInt(searchParams.get('beds')) || (options && options.beds) || 1;
-  
 
-
-  const { data, loading, error, reFetch } = useFetch(
+  const { data, loading, error } = useFetch(
     `/rooms?adults=${adults}&children=${children}&beds=${beds}`
   );
-
-
 
   useEffect(() => {
     // Update URL with new search parameters

@@ -89,15 +89,6 @@ const Search = () => {
         };
     }, []);
 
-    // // Update the search parameters in the URL when options change
-    // useEffect(() => {
-    //     const searchParams = new URLSearchParams();
-    //     searchParams.append('adults', options.adults);
-    //     searchParams.append('children', options.children);
-    //     searchParams.append('beds', options.beds);
-    //     navigate(`?${searchParams.toString()}`);
-    // }, [options, navigate]);
-
     // Handle increase decrease options
     const handleOption = (name, operation) => {
         setOptions(prev => {
