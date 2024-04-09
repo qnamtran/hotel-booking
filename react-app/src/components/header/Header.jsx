@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCreditCard, faCartFlatbedSuitcase } from '@fortawesome/free-solid-svg-icons'
 import Search from '../search/Search';
@@ -11,7 +12,7 @@ const Header = () => {
             <div className="headerContainer">
                 <div className="headerHero">
                     <div className="heroTitle">
-                        <div className="roomAvailableTag">Room available • <span><a href="#">Book Now</a></span></div>
+                        <div className="roomAvailableTag">Room available • <Link to='/rooms'><span>Book Now</span></Link></div>
                         <h1 className="heroMainTitle mainTitle">Kick off the new year with a new stay</h1>
                         <p className="heroSubtitle">Sunnier days are ahead, and West Bestern has a stay to warm your spirits. Indulge in a tranquil stay and rejuvenate your mind, body, and soul.</p>
                         <div className="heroBenefits">
