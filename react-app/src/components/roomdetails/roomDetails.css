@@ -108,6 +108,12 @@
     border: 1px solid #F1F1F1;
 }
 
+.selectRoom{
+    display: flex;
+    flex-direction: row;
+    gap: 24px
+}
+
 /* Media queries */
 
 @media screen and (max-width: 768px){

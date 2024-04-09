@@ -141,6 +141,19 @@ button .icon{
     width: 20px !important;
     height: 20px !important;
     accent-color: #212121;
+    cursor: pointer;
+}
+
+.radioItem{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.radioButton{
+    width: 20px !important;
+    height: 20px !important;
+    accent-color: #212121;
 }
 
 .error-message {

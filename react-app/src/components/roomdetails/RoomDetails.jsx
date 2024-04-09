@@ -1,11 +1,69 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import "./roomDetails.css"
-import "../../styles/styles.css"
-import { faArrowRight, faBathtub, faBed, faCouch, faPeopleGroup, faSink, faSmokingBan, faSnowflake, faTv } from '@fortawesome/free-solid-svg-icons'
+import React from 'react';
+import axios from "axios";
+import { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { SearchContext } from "../../context/SearchContext";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import "./roomDetails.css";
+import "../../styles/styles.css";
+import { faArrowRight, faBathtub, faBed, faCouch, faPeopleGroup, faSink, faSmokingBan, faSnowflake, faTv } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
+
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 const RoomDetails = ({ roomDetailData, availableRoomCount }) => {
+    const navigate = useNavigate();
+    const [selectedRooms, setSelectedRooms] = useState([]);
+    const { dates } = useContext(SearchContext);
 
+    const getDatesInRange = (startDate, endDate) => {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const date = new Date(start.getTime());
+        const dates = [];
+
+        while (date <= end) {
+            dates.push(new Date(date).getTime());
+            date.setDate(date.getDate() + 1);
+        }
+
+        return dates;
+    };
+
+    const alldates = getDatesInRange(dates?.[0]?.startDate, dates?.[0]?.endDate);
+
+    const isAvailable = (roomNumber) => {
+        const isFound = roomNumber.unavailableDates.some((date) =>
+            alldates.includes(new Date(date).getTime())
+        );
+
+        return !isFound;
+    };
+
+    const handleSelect = (e) => {
+        const checked = e.target.checked;
+        const value = e.target.value;
+        setSelectedRooms(
+            checked
+                ? [...selectedRooms, value]
+                : selectedRooms.filter((roomDetailData) => roomDetailData !== value)
+        );
+    };
+
+    const handleReserve = async () => {
+        try {
+            await Promise.all(
+                selectedRooms.map((roomId) => {
+                    const res = axios.put(`/rooms/availability/${roomId}`, {
+                        dates: alldates,
+                    });
+                    return res.data;
+                })
+            );
+            navigate("/");
+        } catch (err) { }
+    };
     return (
         <div className="roomDetails">
             <div className="roomDetailsContainer">
@@ -62,7 +120,63 @@ const RoomDetails = ({ roomDetailData, availableRoomCount }) => {
                             <div className="roomCostPerNight">CAD {roomDetailData.costPerNight}/night</div>
                             <div className="roomCostDisclaimer">Tax and fee are excluded</div>
                         </div>
-                        <button className="secondary-btn animated-btn hover-effect-btn">Select this room <span className='icon'><FontAwesomeIcon icon={faArrowRight} /></span></button>
+                        <Popup trigger={<button className="secondary-btn animated-btn hover-effect-btn">Reserve this room <span className='icon'><FontAwesomeIcon icon={faArrowRight} /></span></button>
+                        }
+                            modal nested
+                            onClose={() => {
+
+                            }}>
+                            {
+                                close => (
+                                    <div className='modal'>
+                                        <div>
+                                            <span className='close-btn' onClick=
+                                                {() => { close(); }}>
+                                                <FontAwesomeIcon icon={faCircleXmark} />
+                                            </span>
+                                        </div>
+                                        <div className='content'>
+                                            <div className="formPopup">
+                                                <h1>Reserve this room</h1>
+                                                <div className="inputContainer">
+                                                    <h2 className='roomTitle'>{roomDetailData.name}</h2>
+                                                    <div className="bookingInfo">
+                                                        <div className="textContainer">
+                                                            <div className="textTitle">Check-in Date</div>
+                                                            <div className="textData">{new Date(dates?.[0]?.startDate).toLocaleDateString()}</div>
+                                                        </div>
+                                                        <div className="textContainer">
+                                                            <div className="textTitle">Check-out Date</div>
+                                                            <div className="textData">{new Date(dates?.[0]?.endDate).toLocaleDateString()}</div>
+                                                        </div>
+                                                        <div className="textContainer">
+                                                            <div className="textTitle">Max Guests</div>
+                                                            <div className="textData">{roomDetailData.maxPeople}</div>
+                                                        </div>
+                                                    </div>
+                                                    <h3>Select available room number</h3>
+                                                    <div className="selectRoom">
+                                                        {roomDetailData.roomNumbers.map((roomNumber) => (
+                                                            <div className="checkboxItem" key={roomNumber._id}>
+                                                                <input
+                                                                    className='checkBox'
+                                                                    type="radio"
+                                                                    value={roomNumber._id}
+                                                                    onChange={handleSelect}
+                                                                    disabled={!isAvailable(roomNumber)}
+                                                                />
+                                                                <label>{roomNumber.number}</label>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                                <button className='primary-btn' onClick={handleReserve}>Confirm Reservation</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            }
+                        </Popup>
                     </div>
                 </div>
             </div>
@@ -70,4 +184,4 @@ const RoomDetails = ({ roomDetailData, availableRoomCount }) => {
     )
 }
 
-export default RoomDetails
+export default RoomDetails;
