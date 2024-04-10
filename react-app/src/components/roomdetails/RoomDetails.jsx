@@ -3,6 +3,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SearchContext } from "../../context/SearchContext";
+import { AuthContext } from '../../context/AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "./roomDetails.css";
 import "../../styles/styles.css";
@@ -16,6 +17,9 @@ const RoomDetails = ({ roomDetailData, availableRoomCount }) => {
     const navigate = useNavigate();
     const [selectedRoomNumber, setSelectedRoomNumber] = useState(null);
     const { dates } = useContext(SearchContext);
+    const { user } = useContext(AuthContext);
+
+    const [error, setError] = useState('');
 
     const getDatesInRange = (startDate, endDate) => {
         const start = new Date(startDate);
@@ -41,27 +45,74 @@ const RoomDetails = ({ roomDetailData, availableRoomCount }) => {
         return !isFound;
     };
 
+    const calculateAvailableRoomCount = (room) => {
+        const isAvailable = (roomNumber) => {
+            const isFound = roomNumber.unavailableDates.some((date) =>
+                alldates.includes(new Date(date).getTime())
+            );
+            return !isFound;
+        };
+
+        const availableRooms = room.roomNumbers.filter((roomNumber) => isAvailable(roomNumber));
+        return availableRooms.length;
+    };
+
+    const handleClose = () => {
+        setSelectedRoomNumber(null);
+        setError('');
+    };
+
     const handleSelect = (roomNumberId) => {
         setSelectedRoomNumber(roomNumberId);
     };
 
+    const handleCreateBooking = async () => {
+        try {
+            // Find the selected room number object
+            const selectedRoomNumberObject = roomDetailData.roomNumbers.find(room => room._id === selectedRoomNumber);
+
+            const bookingData = {
+                roomName: roomDetailData.name,
+                roomNumber: selectedRoomNumberObject.number,
+                userName: user.name,
+                checkInDate: new Date(dates?.[0]?.startDate),
+                checkOutDate: new Date(dates?.[0]?.endDate),
+                costPerNight: roomDetailData.costPerNight
+            };
+
+            const bookingRes = await axios.post('/bookings', bookingData);
+            console.log(bookingRes.data);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     const handleReserve = async () => {
         try {
-            const res = await axios.put(`/rooms/availability/${selectedRoomNumber}`, {
+            if (!selectedRoomNumber) {
+                setError('Please select a room number.');
+                return;
+            }
+            // Reserve the selected room
+            const reserveRes = await axios.put(`/rooms/availability/${selectedRoomNumber}`, {
                 dates: alldates,
             });
-            console.log(res.data);
+            console.log(reserveRes.data);
+
+            handleCreateBooking()
+
             navigate("/");
         } catch (err) {
             console.error(err);
         }
     };
+
     return (
         <div className="roomDetails">
             <div className="roomDetailsContainer">
                 <div className="roomImage"><img src={roomDetailData.photo} alt="" /></div>
                 <div className="roomDetailsContent">
-                    <div className="roomAvailableCount"><span>{availableRoomCount}</span> available room(s)</div>
+                    <div className="roomAvailableCount"><span>{calculateAvailableRoomCount(roomDetailData)}</span> available room(s)</div>
                     <div className="roomInformation">
                         <h2 className='roomTitle'>{roomDetailData.name}</h2>
                         <p className='roomDescription'>{roomDetailData.description} </p>
@@ -116,7 +167,7 @@ const RoomDetails = ({ roomDetailData, availableRoomCount }) => {
                         }
                             modal nested
                             onClose={() => {
-
+                                handleClose();
                             }}>
                             {
                                 close => (
@@ -164,6 +215,7 @@ const RoomDetails = ({ roomDetailData, availableRoomCount }) => {
                                                             </div>
                                                         ))}
                                                     </div>
+                                                    {error && <p className="error-message">{error}</p>}
                                                 </div>
                                                 <button className='primary-btn' onClick={handleReserve}>Confirm Reservation</button>
                                             </div>

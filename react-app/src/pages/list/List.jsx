@@ -17,7 +17,7 @@ const List = () => {
   const navigate = useNavigate();
   const { options } = useContext(SearchContext);
   const [filteredData, setFilteredData] = useState([]);
-  
+
   // Parse URL parameters to get search criteria
   const searchParams = new URLSearchParams(location.search);
   const adults = parseInt(searchParams.get('adults')) || (options && options.adults) || 1;
@@ -45,19 +45,7 @@ const List = () => {
       return room.maxPeople >= totalGuests && room.numberOfBed >= beds;
     });
     setFilteredData(filteredRooms);
-
-    // Save filtered data to localStorage
-    // localStorage.setItem('filteredData', JSON.stringify(filteredRooms));
   }, [data, adults, children, beds]);
-
-
-  // Calculate available room count for each room
-  const calculateAvailableRoomCount = (room) => {
-    const totalRooms = room.roomNumbers.length;
-    const unavailableRooms = room.roomNumbers.filter(room => room.unavailableDates.length > 0);
-    const availableRoomCount = totalRooms - unavailableRooms.length;
-    return availableRoomCount;
-  };
 
   return (
     <div>
@@ -75,7 +63,6 @@ const List = () => {
                   <RoomDetails
                     roomDetailData={roomDetailData}
                     key={roomDetailData._id}
-                    availableRoomCount={calculateAvailableRoomCount(roomDetailData)}
                   />
                 ))}
               </>
