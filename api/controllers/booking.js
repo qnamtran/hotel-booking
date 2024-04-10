@@ -24,11 +24,20 @@ export const getBooking = async (req, res, next) => {
 
 // Get all bookings
 export const getBookings = async (req, res, next) => {
-    try {
-      const bookings = await Booking.find();
-      res.status(200).json(bookings);
-    } catch (err) {
-      next(err);
-    }
-  };
-  
+  try {
+    const bookings = await Booking.find();
+    res.status(200).json(bookings);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Get all bookings by a user
+export const getBookingsByUserId = async (req, res, next) => {
+  try {
+    const bookings = await Booking.find({ userId: req.params.userId });
+    res.status(200).json(bookings);
+  } catch (err) {
+    next(err);
+  }
+};

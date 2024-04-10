@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const BookingSchema = new mongoose.Schema(
   {
+    roomId: {
+      type: String,
+      require: true,
+    },
     roomName: {
       type: String,
       require: true,
@@ -9,6 +13,10 @@ const BookingSchema = new mongoose.Schema(
     roomNumber: {
       type: Number,
       require: true,
+    },
+    userId:{
+      type: String,
+      require:true,
     },
     userName: {
       type: String,

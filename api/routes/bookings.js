@@ -1,5 +1,5 @@
 import express from "express";
-import { createBooking, getBooking, getBookings } from "../controllers/booking.js";
+import { createBooking, getBooking, getBookings, getBookingsByUserId } from "../controllers/booking.js";
 
 const router = express.Router();
 
@@ -11,5 +11,8 @@ router.get("/:id", getBooking);
 
 // Get all bookings
 router.get("/", getBookings);
+
+// Get all bookings by a user
+router.get("/user/:id", getBookingsByUserId);
 
 export default router;

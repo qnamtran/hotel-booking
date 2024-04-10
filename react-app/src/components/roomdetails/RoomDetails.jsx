@@ -13,7 +13,7 @@ import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
-const RoomDetails = ({ roomDetailData, availableRoomCount }) => {
+const RoomDetails = ({ roomDetailData }) => {
     const navigate = useNavigate();
     const [selectedRoomNumber, setSelectedRoomNumber] = useState(null);
     const { dates } = useContext(SearchContext);
@@ -72,8 +72,10 @@ const RoomDetails = ({ roomDetailData, availableRoomCount }) => {
             const selectedRoomNumberObject = roomDetailData.roomNumbers.find(room => room._id === selectedRoomNumber);
 
             const bookingData = {
+                roomId: roomDetailData._id,
                 roomName: roomDetailData.name,
                 roomNumber: selectedRoomNumberObject.number,
+                userId: user._id,
                 userName: user.name,
                 checkInDate: new Date(dates?.[0]?.startDate),
                 checkOutDate: new Date(dates?.[0]?.endDate),
