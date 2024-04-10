@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons'
@@ -16,7 +16,22 @@ import 'reactjs-popup/dist/index.css';
 
 
 
-const Account = () => {
+const Account = ({ userId }) => {
+  const [bookings, setBookings] = useState([]);
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const response = await axios.get(`/bookings/user/${userId}`);
+        setBookings(response.data);
+      } catch (error) {
+        console.error('Error fetching bookings:', error);
+      }
+    };
+
+    fetchBookings();
+  }, [userId]);
+
   const userData = JSON.parse(localStorage.getItem('user'));
 
   const navigate = useNavigate();
@@ -36,7 +51,7 @@ const Account = () => {
 
   // Function to handle password change
   const handlePasswordChange = async () => {
-    
+
     try {
       setError('');
       // New Password validation
@@ -94,8 +109,9 @@ const Account = () => {
           <div className="myBooking">
             <div className="myBookingHeader">My Booking</div>
             <div className="myBookingList">
-              <Booking />
-              <Booking />
+              {bookings.map((bookingDetailData) => (
+                <Booking key={bookingDetailData._id} bookingDetailData={bookingDetailData} />
+              ))}
             </div>
           </div>
           <div className="myInfo">

@@ -154,6 +154,7 @@ button .icon{
     width: 20px !important;
     height: 20px !important;
     accent-color: #212121;
+    cursor: pointer;
 }
 
 .error-message {
