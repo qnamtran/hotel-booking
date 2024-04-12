@@ -13,6 +13,6 @@ router.get("/:id", getBooking);
 router.get("/", getBookings);
 
 // Get all bookings by a user
-router.get("/user/:id", getBookingsByUserId);
+router.get("/user/:userId", getBookingsByUserId);
 
 export default router;

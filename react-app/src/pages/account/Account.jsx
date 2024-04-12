@@ -16,8 +16,16 @@ import 'reactjs-popup/dist/index.css';
 
 
 
-const Account = ({ userId }) => {
+const Account = () => {
   const [bookings, setBookings] = useState([]);
+  const [userId, setUserId] = useState('');
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem('user'));
+    if (userData) {
+      setUserId(userData._id); // Set the userId from user data stored in localStorage
+    }
+  }, []);
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -29,7 +37,9 @@ const Account = ({ userId }) => {
       }
     };
 
-    fetchBookings();
+    if (userId) {
+      fetchBookings();
+    }
   }, [userId]);
 
   const userData = JSON.parse(localStorage.getItem('user'));
