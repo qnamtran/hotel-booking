@@ -31,7 +31,9 @@ const Account = () => {
     const fetchBookings = async () => {
       try {
         const response = await axios.get(`/bookings/user/${userId}`);
-        setBookings(response.data);
+        // Sort bookings from newest to oldest based on createdAt date
+        const sortedBookings = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setBookings(sortedBookings);
       } catch (error) {
         console.error('Error fetching bookings:', error);
       }

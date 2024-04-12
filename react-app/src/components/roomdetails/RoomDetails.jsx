@@ -104,6 +104,8 @@ const RoomDetails = ({ roomDetailData }) => {
             handleCreateBooking()
 
             navigate("/account");
+            // Reload the page to display new booking
+            window.location.reload();
         } catch (err) {
             console.error(err);
         }
