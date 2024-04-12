@@ -46,10 +46,13 @@ export const AuthContextProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(state.user));
   }, [state.user]);
 
+  const isAuthenticated = state.user !== null;
+
   return (
     <AuthContext.Provider
       value={{
         user: state.user,
+        isAuthenticated,
         loading: state.loading,
         error: state.error,
         dispatch,
