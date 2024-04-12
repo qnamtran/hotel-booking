@@ -22,10 +22,6 @@ const Booking = ({ bookingDetailData }) => {
                         <div className="textTitle">Check-out Date</div>
                         <div className="textData">{new Date(bookingDetailData.checkOutDate).toLocaleDateString()}</div>
                     </div>
-                    {/* <div className="textContainer">
-                        <div className="textTitle">Guests and Beds</div>
-                        <div className="textData">2 adult(s) • 2 children • 2 bed(s)</div>
-                    </div> */}
                 </div>
                 <div className="bookingDivider"></div>
                 <div className="bookingCallToAction">

@@ -103,11 +103,13 @@ const RoomDetails = ({ roomDetailData }) => {
 
             handleCreateBooking()
 
-            navigate("/");
+            navigate("/account");
         } catch (err) {
             console.error(err);
         }
     };
+
+    const { isAuthenticated } = useContext(AuthContext);
 
     return (
         <div className="roomDetails">
@@ -165,6 +167,7 @@ const RoomDetails = ({ roomDetailData }) => {
                             <div className="roomCostPerNight">CAD {roomDetailData.costPerNight}/night</div>
                             <div className="roomCostDisclaimer">Tax and fee are excluded</div>
                         </div>
+                        {isAuthenticated ? (
                         <Popup trigger={<button className="secondary-btn animated-btn hover-effect-btn">Reserve this room <span className='icon'><FontAwesomeIcon icon={faArrowRight} /></span></button>
                         }
                             modal nested
@@ -226,6 +229,9 @@ const RoomDetails = ({ roomDetailData }) => {
                                 )
                             }
                         </Popup>
+                        ) : (
+                            <div className="login-message"><p>Please login to reserve this room</p></div>
+                        )}
                     </div>
                 </div>
             </div>
