@@ -45,6 +45,11 @@ app.use((err, req, res, next) => {
   });
 });
 
+app.get("/", (req, res) => {
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.send("API is running");
+});
+
 app.listen(8800, () => {
   connect();
   console.log("Connected to backend.");
