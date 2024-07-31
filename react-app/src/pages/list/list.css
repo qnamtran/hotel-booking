@@ -1,0 +1,23 @@
+.list{
+    height: auto;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    padding: 32px 24px 80px 24px;
+}
+
+.listContainer {
+    width: 100%;
+    max-width: 1128px;
+    color: #212121;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.listResults{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}

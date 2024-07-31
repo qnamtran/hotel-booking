@@ -1,0 +1,94 @@
+.toproom{
+    height: auto;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    padding: 12px 24px;
+}
+
+.topRoomContainer{
+    width: 100%;
+    max-width: 1128px;
+    color: #212121;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 80px;
+    padding: 120px 0 0 0;
+}
+
+.roomItem{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.roomCoverPhoto{
+    width: 496px;
+    height: 456px;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.roomCoverPhoto img{
+    width: auto;
+    height: 456px;
+}
+
+.roomContent{
+    width: 552px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.roomHighlights{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px 0;
+}
+
+.roomHighlightsItem{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.highlightItem{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 144px;
+}
+
+.highlightIcon{
+    font-size: 20px;
+    text-align: center;
+    width: 24px;
+    height: 24px;
+    color: #B09A83;
+}
+
+/* Media queries */
+
+@media screen and (max-width: 768px){
+    .roomItem{
+        flex-direction: column;
+    }
+    .roomCoverPhoto {
+        order: -1;
+    }
+    .roomContent{
+        width: auto;
+    }
+
+    .roomCoverPhoto{
+        width: 100%;
+        height: 100%;
+    }
+}
